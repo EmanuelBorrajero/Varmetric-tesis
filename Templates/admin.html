@@ -1,0 +1,98 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Admin
+{% endblock title %}
+
+{% block body %}
+<div class="">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Bienvenido <br> Investigador {{ user }}</h1>
+    </div>
+</div>
+    
+    <div class="text-center">
+        <div class="mb-4">
+            <h3 class="">Administraci&oacute;n de Varmetric</h3>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+            <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <a href="" class="d-block card-header py-3 text-decoration-none">
+                    <h6 class="m-0 font-weight-bold text-primary">M&eacute;tricas</h6>
+                </a>
+                <div class="collapse show" id="collapseCardExample">
+                    <div class="card-body">
+                        <a href="" class="d-block py-3 text-decoration-none mb-1">
+                            <h6 class="m-0 font-weight-bold text-primary mb-5">Crear Variable</h6>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <a href="" class="d-block card-header py-3 text-decoration-none">
+                    <h6 class="m-0 font-weight-bold text-primary">Instrumentos</h6>
+                </a>
+                <div class="collapse show" id="collapseCardExample">
+                    <div class="card-body">
+                        <a href="" class="d-block  py-3 text-decoration-none">
+                            <h6 class="m-0 font-weight-bold text-primary">Crear Instrumento</h6>
+                        </a>                
+                        <a href="" class="d-block py-3 text-decoration-none">
+                            <h6 class="m-0 font-weight-bold text-primary">Revisar Instrumento</h6>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ayudaModal">
+        <span class="icon text-white-50">
+            <i class="fas fa-info-circle"></i>
+        </span>
+        <span class="text ml-3 mr-3">Ayuda</span>
+    </button>
+    <a href="{% url 'index' %}" class="btn btn-success btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-check"></i>
+        </span>
+        <span class="text">Ver el sitio </span>
+    </a>
+
+    <!-- Ayuda -->
+<div class="modal fade" id="ayudaModal" tabindex="-1" aria-labelledby="ayudaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="ayudaLabel">Ayuda</h1>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>
+            Se define aprendizaje creativo de la informática como la configuración subjetiva, social o indivi-dual, 
+            de tres procesos principales: la personalización de la información, 
+            la confrontación con lo dado y la producción de ideas propias
+            y nuevas resultantes de la emergencia de sentidos subjetivos asociados al aprender informática
+            en un contexto de proyecto.
+            </p><p>
+            Esta definición resume las características del aprendizaje creativo de la informática y 
+            lo sitúa en el contexto fundamental de la creación informática: 
+            el proyecto. Al mismo tiempo, 
+            establece las condiciones para que transcurra el aprendizaje creativo de las tecnologías informáticas. 
+            Permite a los investigadores contar con una definición y un sistema de dimensiones e 
+            indicadores para evaluar su desarrollo. 
+            </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}
