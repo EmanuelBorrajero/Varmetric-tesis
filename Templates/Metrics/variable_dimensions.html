@@ -1,0 +1,58 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Varieble
+{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mt-5"">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'Metrics:variable_detail' object_list.variable.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">Listado de Dimensiones</h3>
+            <button class="btn btn-outline-dark" onclick="open_modal_create_dimension('{% url 'Metrics:dimension_create' object_list.variable.id %}')">Dimensi&oacute;n &plus;</button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">&numero;</th>
+                            <th scope="col">Descripci&oacute;n</th>
+                            <th scope="col">Peso</th>
+                            <th scope="col">Opciones</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if object_list.queryset %}
+                        {% for object in object_list.queryset %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{object.description}}</td>
+                          <td>{{object.weigh}}</td>
+                          <td>
+                            <a class="btn btn-outline-info btn-block" href="{% url 'Metrics:dimension_detail' object.id %}">Ver Detalles</a>
+                            <a class="btn btn-outline-primary btn-block" href="#">Editar</a>
+                            <a class="btn btn-outline-danger btn-block" href="#">Eliminar</a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <h1>No existen Dimensiones.</h1>
+                        {% endif %} 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade"  id="createDimension" role="dialog">
+
+    </div>
+{% endblock body %}
+
+{% block extrajs %}
+<script src="{% static 'js/dimension/dimension.js' %}"></script>
+{% endblock extrajs %}

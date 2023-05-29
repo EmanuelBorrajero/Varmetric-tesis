@@ -1,1 +1,55 @@
-Aqui va el template base de el sitio
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+
+        <title>{% block title %}  {% endblock title %}</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/icon.ico' %}" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        {% block extracss %}
+
+        {% endblock extracss %}
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <div class="sidebar-brand-icon">
+                <img class="img-profile w-25 rounded" src="{% static 'assets/icon.ico' %}"></img>
+                <a class="navbar-brand" href="{% url 'index' %}">Varmetric</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'index' %}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Encuesta</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Entrevista</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Observaci&oacute;n</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'adminsite' %}">Administraci&oacute;n</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block body %}
+
+        {% endblock body %}
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Copyright &copy; Varmetric UMCC 2023</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+        {% block extrajs %}
+
+        {% endblock extrajs %}
+    </body>
+</html>

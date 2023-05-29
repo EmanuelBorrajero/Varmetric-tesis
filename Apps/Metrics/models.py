@@ -45,7 +45,6 @@ class Interval(models.Model):
 # Escala
 class Scale(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre",max_length=128)
     interval = models.ManyToManyField(Interval)
 
     def __str__(self):
@@ -74,9 +73,10 @@ class Variable(models.Model):
 # Dimensión
 class Dimension(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
-    weigh = models.IntegerField("Peso", default=0)
-    variables = models.ManyToManyField(Variable)
+    weigh = models.FloatField("Peso", default=0)
+    variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Dimension: {self.description} ({self.weigh})"
@@ -89,9 +89,10 @@ class Dimension(models.Model):
 # Indicador
 class Indicator(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
-    weigh = models.IntegerField("Peso", default=0)
-    dimensions = models.ManyToManyField(Dimension)
+    weigh = models.FloatField("Peso", default=0)
+    dimension = models.ForeignKey(Dimension, on_delete=models.CASCADE)
     
     def __str__(self):
         return f"Indicador: {self.description} ({self.weigh})"
@@ -104,13 +105,13 @@ class Indicator(models.Model):
 # Criterio de Medida
 class MeasurementCriterion(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
-    max_value = models.IntegerField("Valor Máximo")
-    value = models.IntegerField("Valor Obtenido",default=0)
+    value = models.IntegerField("Valor Obtenido", default=0)
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
-        return f"Criterio de Medida: {self.description} valor máximo:{self.max_value}"
+        return f"Criterio de Medida: {self.description}"
 
     class Meta:
         db_table = 'MeasurementCriterion'

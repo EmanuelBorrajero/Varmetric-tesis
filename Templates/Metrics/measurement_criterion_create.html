@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+                <h2 class="modal-title text-dark">Crear Criterio de Medida</h2>
+                <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form id="measurement_criterion_form_create" action="{% url 'Metrics:measurement_criterion_create' indicator.id %}"  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div id="errorsCreateMeasurementCriterion">
+
+                        </div>
+                        {{form.as_p}}
+                    </div>
+                    <div class="modal-footer">
+                    <button id="create_button_measurement_criterion" type="button" class="btn btn-primary" onclick="create_measurement_criterion();">Aceptar</button>
+                    <button class="btn btn-danger" type="button" onclick="close_modal_regist();">Cancelar</button>
+                </form>
+        </div>
+    </div>
+</div>

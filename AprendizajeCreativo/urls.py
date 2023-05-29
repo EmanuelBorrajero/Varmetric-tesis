@@ -20,8 +20,9 @@ from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', login_required(Index.as_view()), name= 'index' ),
+    path('', Index.as_view(), name= 'index' ),
     path('administración/', login_required(Admin.as_view()), name= 'adminsite' ),
     path('metricas/', include(('Apps.Metrics.urls', 'Metrics'))),
+    path('instrumentos/', include(('Apps.Instruments.urls', 'Instruments'))),
     path('accounts/', include('Apps.AccesControl.urls'), name='accounts'),
 ]
