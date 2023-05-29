@@ -33,8 +33,8 @@ Varmetric | Indicador
                           <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
                           <td>
-                            <a class="btn btn-outline-primary btn-block" href="#">Editar</a>
-                            <a class="btn btn-outline-danger btn-block" href="#">Eliminar</a>
+                            <button class="btn btn-outline-primary btn-block"  onclick="open_modal_update_measurement_criterion('{% url 'Metrics:measurement_criterion_update' object.id %}')">Editar</button>
+                            <button class="btn btn-outline-danger btn-block"  onclick="open_modal_measurement_criterion('{% url 'Metrics:measurement_criterion_delete' object.id %}')">Eliminar</button>
                           </td>
                         </tr>
                         {% endfor %}
@@ -50,6 +50,12 @@ Varmetric | Indicador
 </div>
 
     <div class="modal fade"  id="createMeasurementCriterion" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="updateMeasurementCriterion" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="deleteMeasurementCriterion" role="dialog">
 
     </div>
 {% endblock body %}

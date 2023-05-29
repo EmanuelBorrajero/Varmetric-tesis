@@ -20,9 +20,13 @@ urlpatterns = [
     #Indicator
     path('listado/indicador/<pk>', login_required(IndicatorLIst.as_view()), name='indicator_list'),
     path('crear/indicador/<pk>', login_required(IndicatorCreate.as_view()), name='indicator_create'),
+    path('editar/indicador/<pk>', login_required(IndicatorUpdate.as_view()), name='indicator_update'),
+    path('eliminar/indicador/<pk>', login_required(IndicatorDelete.as_view()), name='indicator_delete'),
     path('detalles/indicador/<pk>', login_required(IndicatorDetail.as_view()), name='indicator_detail'),
 
     #Measurement Criterion
     path('listado/criterio de medida/<pk>', login_required(MeasurementCriterionLIst.as_view()), name='measurement_criterion_list'),
     path('crear/criterio de medida/<pk>', login_required(MeasurementCriterionCreate.as_view()), name='measurement_criterion_create'),
+    path('editar/criterio de medida/<pk>', login_required(MeasurementCriterionUpdate.as_view()), name='measurement_criterion_update'),
+    path('eliminar/criterio de medida/<pk>', login_required(MeasurementCriterionDelete.as_view()), name='measurement_criterion_delete'),
 ]

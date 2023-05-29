@@ -150,13 +150,13 @@ class DimensionUpdate(UpdateView):
                     description = form.cleaned_data.get('description'),
                     weigh = form.cleaned_data.get('weigh'),
                 )
-                message = 'Dimensión creada corréctamente!!'
+                message = 'Dimensión modificada corréctamente!!'
                 error = 'No hay Error'
                 responce = JsonResponse({'message': message, 'error': error})
                 responce.status_code = 201
                 return responce
             else:
-                message = 'La dimensión no se ha podido crear!!'
+                message = 'La dimensión no se ha podido modificar!!'
                 error = form.errors
                 responce = JsonResponse({'message': message, 'error': error})
                 responce.status_code = 400
@@ -241,6 +241,50 @@ class IndicatorCreate(CreateView):
         else:
             return redirect('Metrics:indicator_list')
 
+class IndicatorUpdate(UpdateView):
+    model = Indicator
+    form_class = IndicatorForm
+    template_name = 'Metrics/indicator_update.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            form = self.form_class(request.POST, instance = self.get_object())
+            if form.is_valid():
+                Indicator.objects.update(
+                    name = form.cleaned_data.get('name'),
+                    description = form.cleaned_data.get('description'),
+                    weigh = form.cleaned_data.get('weigh'),
+                )
+                message = 'Indicador modificado corréctamente!!'
+                error = 'No hay Error'
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 201
+                return responce
+            else:
+                message = 'El Indicador no se ha podido modificar!!'
+                error = form.errors
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 400
+                return responce
+        else:
+            return redirect('Metrics:indicator_list')
+
+class IndicatorDelete(DeleteView):
+    model = Indicator
+    template_name = 'Metrics/indicator_delete.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            indicator = self.get_object()
+            indicator.delete()
+            message = 'Indicador eliminado corréctamente!!'
+            error = 'No hay Error'
+            response = JsonResponse({'message': message, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('Metrics:indicator_list')
+
 class IndicatorDetail(DetailView):
     model = Indicator
     template_name = 'Metrics/indicator_detail.html'
@@ -297,5 +341,48 @@ class MeasurementCriterionCreate(CreateView):
                 responce = JsonResponse({'message': message, 'error': error})
                 responce.status_code = 400
                 return responce
+        else:
+            return redirect('Metrics:measurement_criterion_list')
+
+class MeasurementCriterionUpdate(UpdateView):
+    model = MeasurementCriterion
+    form_class = MeasurementCriterionForm
+    template_name = 'Metrics/measurement_criterion_update.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            form = self.form_class(request.POST, instance = self.get_object())
+            if form.is_valid():
+                MeasurementCriterion.objects.update(
+                    name = form.cleaned_data.get('name'),
+                    description = form.cleaned_data.get('description'),
+                )
+                message = 'Criterio de Medida modificado corréctamente!!'
+                error = 'No hay Error'
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 201
+                return responce
+            else:
+                message = 'El Criterio de Medida no se ha podido modificar!!'
+                error = form.errors
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 400
+                return responce
+        else:
+            return redirect('Metrics:measurement_criterion_list')
+
+class MeasurementCriterionDelete(DeleteView):
+    model = MeasurementCriterion
+    template_name = 'Metrics/measurement_criterion_delete.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            measurement_criterion = self.get_object()
+            measurement_criterion.delete()
+            message = 'Criterio de Medida eliminado corréctamente!!'
+            error = 'No hay Error'
+            response = JsonResponse({'message': message, 'error': error})
+            response.status_code = 201
+            return response
         else:
             return redirect('Metrics:measurement_criterion_list')

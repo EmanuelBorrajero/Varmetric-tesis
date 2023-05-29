@@ -1,4 +1,4 @@
-{% extends 'base_admin.html' %}
+{% extends 'base_admin.html' %} 
 
 {% load static %}
 
@@ -10,6 +10,7 @@ Varmetric | Indicador {{object.name}}
 <div class="container-fluid">
     <div class="card shadow mt-5"">
         <div class="card-header py-3 text-center">
+            <a href="{% url 'Metrics:indicator_list' object.dimension.id%}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
             <h3 class="text-start text-dark">{{object.name}}</h3>
         </div>
         <div class="card-body">

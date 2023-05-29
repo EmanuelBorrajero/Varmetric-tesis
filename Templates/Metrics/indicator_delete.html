@@ -5,14 +5,14 @@
                 <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="modal-body text-center">
-                    <form id="dimension_form_delete" action="{% url 'Metrics:dimension_delete' object.id %}" method="POST">
+                    <form id="indicator_form_delete" action="{% url 'Metrics:indicator_delete' object.id %}" method="POST">
                     {% csrf_token %}
-                    <h3>Seguro que desea eliminar la dimensi&oacute;n:&nbsp;  
+                    <h3>Seguro que desea eliminar el indicador:&nbsp;  
                     <em>{{object.name}}</em></h3>
                 </div>
                 <div class="modal-footer">
                     <button type="button" 
-                    class="btn btn-danger" onclick="delete_dimension();">Confirmar Eliminaci&oacute;n</button>
+                    class="btn btn-danger" onclick="delete_indicator();">Confirmar Eliminaci&oacute;n</button>
                 </form>
                     <button class="btn btn-primary" type="button" onclick="close_modal_delete();">Cancelar</button>
         </div>

@@ -20,6 +20,7 @@ Varmetric | Dimensiones
                     <thead>
                         <tr>
                             <th scope="col">&numero;</th>
+                            <th scope="col">Nombre</th>
                             <th scope="col">Descripci&oacute;n</th>
                             <th scope="col">Peso</th>
                             <th scope="col">Opciones</th> 
@@ -30,12 +31,13 @@ Varmetric | Dimensiones
                         {% for object in object_list.queryset %}
                         <tr>
                           <td>{{forloop.counter}}</td>
+                          <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
                           <td>{{object.weigh}}</td>
                           <td>
                             <a class="btn btn-outline-info btn-block" href="{% url 'Metrics:indicator_detail' object.id %}">Ver Detalles</a>
-                            <a class="btn btn-outline-primary btn-block" href="#">Editar</a>
-                            <a class="btn btn-outline-danger btn-block" href="#">Eliminar</a>
+                            <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_indicator('{% url 'Metrics:indicator_update' object.id %}')">Editar</button>
+                            <button class="btn btn-outline-danger btn-block" onclick="open_modal_delete_indicator('{% url 'Metrics:indicator_delete' object.id %}')">Eliminar</button>
                           </td>
                         </tr>
                         {% endfor %}
@@ -51,6 +53,12 @@ Varmetric | Dimensiones
 </div>
 
     <div class="modal fade"  id="createIndicator" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="updateIndicator" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="deleteIndicator" role="dialog">
 
     </div>
 {% endblock body %}

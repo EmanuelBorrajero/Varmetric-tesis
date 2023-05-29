@@ -39,7 +39,7 @@ class VariableForm(forms.ModelForm):
         description = self.cleaned_data.get('description')
         for char in description:
             if char in'`!@#$%^&*()_=+-}{][></"\|~':
-                raise ValidationError('Caracteres incorrectos en el Nombre')
+                raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
 class DimensionForm(forms.ModelForm):
@@ -86,7 +86,7 @@ class DimensionForm(forms.ModelForm):
         description = self.cleaned_data.get('description')
         for char in description:
             if char in'`!@#$%^&*()_=+-}{][></"\|~':
-                raise ValidationError('Caracteres incorrectos en el Nombre')
+                raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
 class IndicatorForm(forms.ModelForm):
@@ -133,7 +133,7 @@ class IndicatorForm(forms.ModelForm):
         description = self.cleaned_data.get('description')
         for char in description:
             if char in'`!@#$%^&*()_=+-}{][></"\|~':
-                raise ValidationError('Caracteres incorrectos en el Nombre')
+                raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
 class MeasurementCriterionForm(forms.ModelForm):
@@ -174,5 +174,5 @@ class MeasurementCriterionForm(forms.ModelForm):
         description = self.cleaned_data.get('description')
         for char in description:
             if char in'`!@#$%^&*()_=+-}{][></"\|~':
-                raise ValidationError('Caracteres incorrectos en el Nombre')
+                raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
