@@ -35,8 +35,8 @@ Varmetric | Variebles
                           <td>{{object.description}}</td>
                           <td>
                             <a class="btn btn-outline-info btn-block" href="{% url 'Metrics:variable_detail' object.id %}">Ver Detalles</a>
-                            <a class="btn btn-outline-primary btn-block" href="{% url 'Metrics:variable_detail' object.id %}">Editar</a>
-                            <a class="btn btn-outline-danger btn-block" href="{% url 'Metrics:variable_detail' object.id %}">Eliminar</a>
+                            <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_variable('{% url 'Metrics:variable_update' object.id %}')">Editar</button>
+                            <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_variable('{% url 'Metrics:variable_delete' object.id %}')">Eliminar</a>
                           </td>
                         </tr>
                         {% endfor %}
@@ -51,6 +51,12 @@ Varmetric | Variebles
 </div>
 </div>
     <div class="modal fade"  id="createVariable" role="dialog">
+
+    </div>
+    <div class="modal fade" id="updateVariable" role="dialog">
+
+    </div>
+    <div class="modal fade" id="deleteVariable" role="dialog">
 
     </div>
 {% endblock body %}

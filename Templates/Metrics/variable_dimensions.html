@@ -20,6 +20,7 @@ Varmetric | Varieble
                     <thead>
                         <tr>
                             <th scope="col">&numero;</th>
+                            <th scope="col">Nombre</th>
                             <th scope="col">Descripci&oacute;n</th>
                             <th scope="col">Peso</th>
                             <th scope="col">Opciones</th> 
@@ -30,12 +31,13 @@ Varmetric | Varieble
                         {% for object in object_list.queryset %}
                         <tr>
                           <td>{{forloop.counter}}</td>
+                          <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
                           <td>{{object.weigh}}</td>
                           <td>
                             <a class="btn btn-outline-info btn-block" href="{% url 'Metrics:dimension_detail' object.id %}">Ver Detalles</a>
-                            <a class="btn btn-outline-primary btn-block" href="#">Editar</a>
-                            <a class="btn btn-outline-danger btn-block" href="#">Eliminar</a>
+                            <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_dimension('{% url 'Metrics:dimension_update' object.id %}')">Editar</button>
+                            <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_dimension('{% url 'Metrics:dimension_delete' object.id %}')">Eliminar</a>
                           </td>
                         </tr>
                         {% endfor %}
@@ -47,8 +49,17 @@ Varmetric | Varieble
             </div>
         </div>
     </div>
+</div>
+</div>
+
 
     <div class="modal fade"  id="createDimension" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="updateDimension" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="deleteDimension" role="dialog">
 
     </div>
 {% endblock body %}

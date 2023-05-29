@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+                <h2 class="modal-title text-dark">Editar Variable</h2>
+                <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form id="variable_form_update" action="{% url 'Metrics:variable_update' object.id %}"  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div id="errorsUpdateVariable">
+
+                        </div>
+                        {{form.as_p}}
+                    </div>
+                    <div class="modal-footer">
+                    <button id="update_button_variable" type="button" class="btn btn-primary" onclick="create_variable();">Aceptar</button>
+                    <button class="btn btn-danger" type="button" onclick="close_modal_update();">Cancelar</button>
+                </form>
+        </div>
+    </div>
+</div>

@@ -36,6 +36,46 @@ class VariableCreate(CreateView):
         else:
             return redirect('Metrics:variable_list')
 
+class VariableUpdate(UpdateView):
+    model = Variable
+    form_class = VariableForm
+    template_name = 'Metrics/variable_update.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            form = self.form_class(request.POST, instance = self.get_object())
+            if form.is_valid():
+                form.save()
+                message = 'Variable modificada corréctamente!!'
+                error = 'No hay Error'
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 201
+                return responce
+            else:
+                message = 'La variable no se ha podido modificar!!'
+                error = form.errors
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 400
+                return responce
+        else:
+            return redirect('Metrics:variable_list')
+
+class VariableDelete(DeleteView):
+    model = Variable
+    template_name = 'Metrics/variable_delete.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            variable = self.get_object()
+            variable.delete()
+            message = 'Variable eliminada corréctamente!!'
+            error = 'No hay Error'
+            response = JsonResponse({'message': message, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('Metrics:variable_list')
+
 class VariableDetail(DetailView):
     model = Variable
     template_name = 'Metrics/variable_detail.html'
@@ -95,6 +135,51 @@ class DimensionCreate(CreateView):
                 return responce
         else:
             return redirect('Metrics:dimension_list')
+
+class DimensionUpdate(UpdateView):
+    model = Dimension
+    form_class = DimensionForm
+    template_name = 'Metrics/dimension_update.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            form = self.form_class(request.POST, instance = self.get_object())
+            if form.is_valid():
+                Dimension.objects.update(
+                    name = form.cleaned_data.get('name'),
+                    description = form.cleaned_data.get('description'),
+                    weigh = form.cleaned_data.get('weigh'),
+                )
+                message = 'Dimensión creada corréctamente!!'
+                error = 'No hay Error'
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 201
+                return responce
+            else:
+                message = 'La dimensión no se ha podido crear!!'
+                error = form.errors
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 400
+                return responce
+        else:
+            return redirect('Metrics:dimension_list')
+
+class DimensionDelete(DeleteView):
+    model = Dimension
+    template_name = 'Metrics/dimension_delete.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            dimension = self.get_object()
+            dimension.delete()
+            message = 'Dimensión eliminada corréctamente!!'
+            error = 'No hay Error'
+            response = JsonResponse({'message': message, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('Metrics:dimension_list')
+
 
 class DimensionDetail(DetailView):
     model = Dimension
