@@ -14,25 +14,10 @@ class Answer(models.Model):
         verbose_name = 'Respuesta'
         verbose_name_plural = 'Respuestas'
 
-class Question(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    text = models.CharField("Nombre", max_length=80)
-    answer = models.OneToOneField(Answer, on_delete=models.CASCADE)
-    measurementCriterions = models.ManyToManyField(MeasurementCriterion)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = 'Encuesta'
-        verbose_name = 'Encuesta'
-        verbose_name_plural = 'Encuesta'
-
 class Poll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
-    questions = models.ManyToManyField(Question)
 
     def __str__(self):
         return self.name
@@ -46,7 +31,6 @@ class Interview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
-    questions = models.ManyToManyField(Question)
 
     def __str__(self):
         return self.name
@@ -55,6 +39,38 @@ class Interview(models.Model):
         db_table = 'Entrevista'
         verbose_name = 'Entrevista'
         verbose_name_plural = 'Entrevistas'
+
+class QuestionPoll(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    name = models.CharField("Nombre", max_length=80)
+    text = models.TextField("Texto de la pregunta")
+    answer = models.OneToOneField(Answer, on_delete=models.CASCADE)
+    measurementCriterions = models.ManyToManyField(MeasurementCriterion)
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'PreguntaEncuesta'
+        verbose_name = 'Pregunta de la Encuesta'
+        verbose_name_plural = 'Preguntas de la Encuesta'
+
+class QuestionInterview(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    name = models.CharField("Nombre", max_length=80)
+    text = models.TextField("Texto de la pregunta")
+    answer = models.OneToOneField(Answer, on_delete=models.CASCADE)
+    measurementCriterions = models.ManyToManyField(MeasurementCriterion)
+    interview = models.ForeignKey(Poll, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'PreguntaEntrevista'
+        verbose_name = 'Pregunta de la Entrevista'
+        verbose_name_plural = 'Preguntas de la Entrevista'
 
 class Observation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)

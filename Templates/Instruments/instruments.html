@@ -1,0 +1,31 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Instrumentos
+{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mt-5">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'adminsite' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">Seleccione el Instrumento que desea crear</h3>
+        </div>
+        <div class="card-body">
+            <a href="" class="btn btn-primary">
+                <h6 class="m-0 font-weight-bold text-white">Crear Encuesta</h6>
+            </a>
+            <a href="" class="btn btn-primary">
+                <h6 class="m-0 font-weight-bold text-white">Crear Entrevista</h6>
+            </a>
+            <a href="" class="btn btn-primary">
+                <h6 class="m-0 font-weight-bold text-white">Crear Observaci&oacute;n</h6>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock body %}

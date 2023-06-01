@@ -1,8 +1,7 @@
-from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.http import JsonResponse
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from .calculation import calculate_intervals
 from .models import *
 from .forms import *
