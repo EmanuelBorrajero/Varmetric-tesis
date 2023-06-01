@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #'captcha',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,3 +133,9 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#RECAPTCHA_PUBLIC_KEY = '6LdeKVwmAAAAAJht1FBE1vxTkfF7W52NkbKVF1_O'
+#RECAPTCHA_PRIVATE_KEY = '6LdeKVwmAAAAANCCnxhAPVMETd4CkolHsnHarTvq'
+
+#RECAPTCHA_REQUIRED_SCORE = 0.85
