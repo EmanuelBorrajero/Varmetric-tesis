@@ -136,7 +136,7 @@ class QuestionPollForm(forms.ModelForm):
         labels = {
             'name': 'Nombre*',
             'text': 'Texto de la pregunta*',
-            'measurementCriterions': 'Criterios de Medida*',
+            'measurementCriterions': 'Criterio de Medida*',
 
 
         }
@@ -182,7 +182,7 @@ class QuestionInterviewForm(forms.ModelForm):
         labels = {
             'name': 'Nombre*',
             'text': 'Texto de la pregunta*',
-            'measurementCriterions': 'Criterios de Medida*',
+            'measurementCriterions': 'Criterio de Medida*',
 
 
         }

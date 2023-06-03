@@ -24,5 +24,6 @@ urlpatterns = [
     path('administración/', login_required(Admin.as_view()), name= 'adminsite' ),
     path('metricas/', include(('Apps.Metrics.urls', 'Metrics'))),
     path('instrumentos/', include(('Apps.Instruments.urls', 'Instruments'))),
+    path('respuestas/', include(('Apps.Answers.urls', 'Answers'))),
     path('accounts/', include('Apps.AccesControl.urls'), name='accounts'),
 ]

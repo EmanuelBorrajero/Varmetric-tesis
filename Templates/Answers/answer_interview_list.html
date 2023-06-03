@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Varmetric | Entrevista {% endblock title %}
+
+
+{% block body %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <div class="mb-5">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h1 class="font-weight-light">Entrevistas</h1>
+                </div>
+            <div class="card-body">
+                <h3 class="mb-3">Responda las sigientes entrevista con la mayor sinceridad posible</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row gx-4 gx-lg-5">
+        {% if object_list %}
+        {% for object in object_list %}
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">{{object.name}}</h2>
+                    <p class="card-text">{{object.description}}</p>
+                </div>
+                <div class="card-footer"><a class="btn btn-primary btn-sm">Responder Entrevista</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">No hay entrevista que responder</h2>
+                </div>
+                <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'index' %}">&loarr; Atras</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}
