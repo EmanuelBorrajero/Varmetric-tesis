@@ -10,7 +10,7 @@ Varmetric | Encuesta
 <div class="container-fluid">
     <div class="card shadow mt-5">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'adminsite' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <a href="{% url 'Instruments:select_instrument' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
             <h3 class="text-start">Listado de Encuestas</h3>
             <button class="btn btn-outline-dark" onclick="open_modal_create_poll('{% url 'Instruments:poll_create' %}')">Encuesta &plus;</button>
         </div>
@@ -35,8 +35,8 @@ Varmetric | Encuesta
                           <td>{{object.description}}</td>
                           <td>
                             <a class="btn btn-outline-info btn-block" href="{% url 'Instruments:poll_detail' object.id %}">Ver Detalles</a>
-                            <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_variable('{% url 'Instruments:poll_update' object.id %}')">Editar</button>
-                            <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_variable('{% url 'Instruments:poll_delete' object.id %}')">Eliminar</a>
+                            <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_poll('{% url 'Instruments:poll_update' object.id %}')">Editar</button>
+                            <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_poll('{% url 'Instruments:poll_delete' object.id %}')">Eliminar</a>
                           </td>
                         </tr>
                         {% endfor %}
@@ -61,5 +61,5 @@ Varmetric | Encuesta
     </div>
 {% endblock body %}
 {% block extrajs %}
-<script src="{% static 'js/' %}"></script>
+<script src="{% static 'js/poll/poll.js' %}"></script>
 {% endblock extrajs %}

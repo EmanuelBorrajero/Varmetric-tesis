@@ -9,7 +9,7 @@ class Instruments(TemplateView):
     template_name = "Instruments/instruments.html"
 
 #Poll
-class PollLIst(ListView):
+class PollList(ListView):
     model = Poll
     template_name= 'Instruments/poll_list.html'
 
@@ -63,7 +63,7 @@ class PollUpdate(UpdateView):
 
 class PollDelete(DeleteView):
     model = Poll
-    template_name = 'Instruments/poll_update.html'
+    template_name = 'Instruments/poll_delete.html'
 
     def post(self,request,*args,**kwargs):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -71,7 +71,7 @@ class PollDelete(DeleteView):
             poll.delete()
             message = 'Encuesta eliminada corréctamente!!'
             error = 'No hay Error'
-            response = JsonResponse({'message': message, 'error': error})
+            response = JsonResponse({'message': message, 'error': error}) 
             response.status_code = 201
             return response
         else:
@@ -79,10 +79,10 @@ class PollDelete(DeleteView):
 
 class PollDetail(DetailView):
     model = Poll
-    template_name = 'Instruments/poll_update.html'
+    template_name = 'Instruments/poll_detail.html'
 
 #Interview
-class InterviewLIst(ListView):
+class InterviewList(ListView):
     model = Interview
     template_name= 'Instruments/interview_list.html'
 
@@ -136,7 +136,7 @@ class InterviewUpdate(UpdateView):
 
 class InterviewDelete(DeleteView):
     model = Interview
-    template_name = 'Instruments/interview_update.html'
+    template_name = 'Instruments/interview_delete.html'
 
     def post(self,request,*args,**kwargs):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -152,10 +152,10 @@ class InterviewDelete(DeleteView):
 
 class InterviewDetail(DetailView):
     model = Interview
-    template_name = 'Instruments/interview_update.html'
+    template_name = 'Instruments/interview_detail.html'
 
 #Observation
-class ObservationLIst(ListView):
+class ObservationList(ListView):
     model = Observation
     template_name= 'Instruments/observation_list.html'
 
@@ -209,7 +209,7 @@ class ObservationUpdate(UpdateView):
 
 class ObservationDelete(DeleteView):
     model = Interview
-    template_name = 'Instruments/observation_update.html'
+    template_name = 'Instruments/observation_delete.html'
 
     def post(self,request,*args,**kwargs):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -225,10 +225,10 @@ class ObservationDelete(DeleteView):
 
 class ObservationDetail(DetailView):
     model = Observation
-    template_name = 'Instruments/observation_update.html'
+    template_name = 'Instruments/observation_detail.html'
 
 #QuestionPoll
-class QuestionPollLIst(ListView):
+class QuestionPollList(ListView):
     model = QuestionPoll
     template_name= 'Instruments/question_poll_list.html'
 
@@ -292,11 +292,7 @@ class QuestionPollUpdate(UpdateView):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             form = self.form_class(request.POST, instance = self.get_object())
             if form.is_valid():
-                QuestionPoll.objects.update(
-                    name = form.cleaned_data.get('name'),
-                    text = form.cleaned_data.get('text'),
-                    measurementCriterions = form.cleaned_data.get('measurementCriterions'),
-                )
+                form.save()
                 message = 'Pregunta modificada corréctamente!!'
                 error = 'No hay Error'
                 responce = JsonResponse({'message': message, 'error': error})
@@ -328,7 +324,7 @@ class QuestionPollDelete(DeleteView):
             return redirect('Instruments:poll_list')
 
 #QuestionInterview
-class QuestionInterviewLIst(ListView):
+class QuestionInterviewList(ListView):
     model = QuestionInterview
     template_name= 'Instruments/question_interview_list.html'
 
@@ -363,7 +359,7 @@ class QuestionInterviewCreate(CreateView):
             form = self.form_class(request.POST)
             if form.is_valid():
                 interview = self.get_queryset()
-                QuestionPoll.objects.create(
+                QuestionInterview.objects.create(
                     name = form.cleaned_data.get('name'),
                     text = form.cleaned_data.get('text'),
                     measurementCriterions = form.cleaned_data.get('measurementCriterions'),
@@ -392,11 +388,7 @@ class QuestionInterviewUpdate(UpdateView):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             form = self.form_class(request.POST, instance = self.get_object())
             if form.is_valid():
-                QuestionInterview.objects.update(
-                    name = form.cleaned_data.get('name'),
-                    text = form.cleaned_data.get('text'),
-                    measurementCriterions = form.cleaned_data.get('measurementCriterions'),
-                )
+                form.save()
                 message = 'Pregunta modificada corréctamente!!'
                 error = 'No hay Error'
                 responce = JsonResponse({'message': message, 'error': error})

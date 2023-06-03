@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+                <h2 class="modal-title text-dark">Crear Pregunta</h2>
+                <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form id="question_interview_form_create" action="{% url 'Instruments:question_interview_create' interview.id %}"  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div id="errorsCreateQuestionOInterview">
+
+                        </div>
+                        {{form.as_p}}
+                    </div>
+                    <div class="modal-footer">
+                    <button id="create_button_question_interview" type="button" class="btn btn-primary" onclick="create_question_interview();">Aceptar</button>
+                    <button class="btn btn-danger" type="button" onclick="close_modal_regist();">Cancelar</button>
+                </form>
+        </div>
+    </div>
+</div>

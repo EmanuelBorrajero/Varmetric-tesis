@@ -1,0 +1,30 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Entrevista {{object.name}}
+{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mt-5"">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'Instruments:interview_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start text-dark">{{object.name}}</h3>
+        </div>
+        <div class="card-body">
+            <p class="text-dark">{{object.description}}</p>
+            <a href="{% url 'Instruments:question_interview_list' object.id %}" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-list-ol"></i>
+                </span>
+                <span class="text">Añadir Preguntas</span>
+            </a>
+        <div>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock body %}

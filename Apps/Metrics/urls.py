@@ -29,4 +29,5 @@ urlpatterns = [
     path('crear/criterio de medida/<pk>', login_required(MeasurementCriterionCreate.as_view()), name='measurement_criterion_create'),
     path('editar/criterio de medida/<pk>', login_required(MeasurementCriterionUpdate.as_view()), name='measurement_criterion_update'),
     path('eliminar/criterio de medida/<pk>', login_required(MeasurementCriterionDelete.as_view()), name='measurement_criterion_delete'),
+    path('detalles/criterio de medida/<pk>', login_required(MeasurementCriterionDetail.as_view()), name='measurement_criterion_detail'),
 ]

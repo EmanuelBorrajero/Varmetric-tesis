@@ -1,0 +1,66 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Encuesta
+{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mt-5"">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'Instruments:poll_detail' object_list.poll.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">Preguntas de la Encuesta</h3>
+            <button class="btn btn-outline-dark" onclick="open_modal_create_question_poll('{% url 'Instruments:question_poll_create' object_list.poll.id %}')">Pregunta &plus;</button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">&numero;</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Texto de la pregunta</th>
+                            <th scope="col">Opciones</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if object_list.queryset %}
+                        {% for object in object_list.queryset %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{object.name}}</td>
+                          <td>{{object.text}}</td>
+                          <td>
+                            <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_question_poll('{% url 'Instruments:question_poll_update' object.id %}')">Editar</button>
+                            <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_question_poll('{% url 'Instruments:question_poll_delete' object.id %}')">Eliminar</a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <h1>No existen Preguntas.</h1>
+                        {% endif %} 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+    <div class="modal fade"  id="createQuestionPoll" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="updateQuestionPoll" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="deleteQuestionPoll" role="dialog">
+
+    </div>
+{% endblock body %}
+
+{% block extrajs %}
+<script src="{% static 'js/question_poll/question_poll.js' %}"></script>
+{% endblock extrajs %}

@@ -144,11 +144,7 @@ class DimensionUpdate(UpdateView):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             form = self.form_class(request.POST, instance = self.get_object())
             if form.is_valid():
-                Dimension.objects.update(
-                    name = form.cleaned_data.get('name'),
-                    description = form.cleaned_data.get('description'),
-                    weigh = form.cleaned_data.get('weigh'),
-                )
+                form.save()
                 message = 'Dimensión modificada corréctamente!!'
                 error = 'No hay Error'
                 responce = JsonResponse({'message': message, 'error': error})
@@ -249,11 +245,7 @@ class IndicatorUpdate(UpdateView):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             form = self.form_class(request.POST, instance = self.get_object())
             if form.is_valid():
-                Indicator.objects.update(
-                    name = form.cleaned_data.get('name'),
-                    description = form.cleaned_data.get('description'),
-                    weigh = form.cleaned_data.get('weigh'),
-                )
+                form.save()
                 message = 'Indicador modificado corréctamente!!'
                 error = 'No hay Error'
                 responce = JsonResponse({'message': message, 'error': error})
@@ -352,10 +344,7 @@ class MeasurementCriterionUpdate(UpdateView):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             form = self.form_class(request.POST, instance = self.get_object())
             if form.is_valid():
-                MeasurementCriterion.objects.update(
-                    name = form.cleaned_data.get('name'),
-                    description = form.cleaned_data.get('description'),
-                )
+                form.save()
                 message = 'Criterio de Medida modificado corréctamente!!'
                 error = 'No hay Error'
                 responce = JsonResponse({'message': message, 'error': error})
@@ -385,3 +374,7 @@ class MeasurementCriterionDelete(DeleteView):
             return response
         else:
             return redirect('Metrics:measurement_criterion_list')
+
+class MeasurementCriterionDetail(DetailView):
+    model = MeasurementCriterion
+    template_name = 'Metrics/measurement_criterion_detail.html'

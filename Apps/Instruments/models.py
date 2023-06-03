@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
-from Metrics.models import MeasurementCriterion
+from ..Metrics.models import MeasurementCriterion
 User = get_user_model() 
 
 class Answer(models.Model):
@@ -44,8 +44,8 @@ class QuestionPoll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
     text = models.TextField("Texto de la pregunta")
-    answer = models.OneToOneField(Answer, on_delete=models.CASCADE)
-    measurementCriterions = models.ManyToManyField(MeasurementCriterion)
+    answer = models.OneToOneField(Answer, on_delete=models.CASCADE, null=True)
+    measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -60,9 +60,9 @@ class QuestionInterview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
     text = models.TextField("Texto de la pregunta")
-    answer = models.OneToOneField(Answer, on_delete=models.CASCADE)
-    measurementCriterions = models.ManyToManyField(MeasurementCriterion)
-    interview = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    answer = models.OneToOneField(Answer, on_delete=models.CASCADE, null=True)
+    measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

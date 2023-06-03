@@ -14,18 +14,19 @@ Varmetric | Instrumentos
             <h3 class="text-start">Seleccione el Instrumento que desea crear</h3>
         </div>
         <div class="card-body">
-            <a href="" class="btn btn-primary">
+            <a href="{% url 'Instruments:poll_list' %}" class="btn btn-primary m-2">
                 <h6 class="m-0 font-weight-bold text-white">Crear Encuesta</h6>
-            </a>
-            <a href="" class="btn btn-primary">
+            </a><br>
+            <a href="{% url 'Instruments:interview_list' %}" class="btn btn-primary m-2">
                 <h6 class="m-0 font-weight-bold text-white">Crear Entrevista</h6>
-            </a>
-            <a href="" class="btn btn-primary">
+            </a><br>
+            <a href="{% url 'Instruments:observation_list' %}" class="btn btn-primary m-2">
                 <h6 class="m-0 font-weight-bold text-white">Crear Observaci&oacute;n</h6>
             </a>
         </div>
     </div>
 </div>
+<div class="col-lg-7 text-center m-auto"><img class="img-fluid rounded  mt-3 w-50" src="{% static 'assets/img/img.png' %}" alt="Cargando..." /></div>
 </div>
 
 {% endblock body %}

@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+                <h2 class="modal-title text-dark">Crear Encuesta</h2>
+                <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form id="question_poll_form_create" action="{% url 'Instruments:question_poll_create' poll.id %}"  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div id="errorsCreateQuestionPoll">
+
+                        </div>
+                        {{form.as_p}}
+                    </div>
+                    <div class="modal-footer">
+                    <button id="create_button_question_poll" type="button" class="btn btn-primary" onclick="create_question_poll();">Aceptar</button>
+                    <button class="btn btn-danger" type="button" onclick="close_modal_regist();">Cancelar</button>
+                </form>
+        </div>
+    </div>
+</div> 

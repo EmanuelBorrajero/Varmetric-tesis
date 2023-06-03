@@ -111,7 +111,7 @@ class MeasurementCriterion(models.Model):
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
-        return f"Criterio de Medida: {self.description}"
+        return f"{self.name}"
 
     class Meta:
         db_table = 'MeasurementCriterion'

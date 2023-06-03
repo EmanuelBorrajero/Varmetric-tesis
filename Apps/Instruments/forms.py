@@ -19,7 +19,7 @@ class PollForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Nombre de la Variable...',
+                    'placeholder': 'Nombre de la Encuesta...',
                     }),
             'description': forms.Textarea(
                 attrs={
@@ -59,7 +59,7 @@ class InterviewForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Nombre de la Variable...',
+                    'placeholder': 'Nombre de la Entrevista...',
                     }),
             'description': forms.Textarea(
                 attrs={
@@ -101,7 +101,7 @@ class ObservationForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Nombre de la Variable...',
+                    'placeholder': 'Nombre de la Observación...',
                     }),
             'description': forms.Textarea(
                 attrs={
@@ -109,10 +109,7 @@ class ObservationForm(forms.ModelForm):
                     'rows': '2',
                     'placeholder': 'Ingrese una breve descripción',
                     }),
-            'observationCriterions': forms.CheckboxSelectMultiple(
-                attrs={
-                    'class': 'form-control',
-                    }),
+            'observationCriterions': forms.CheckboxSelectMultiple(),
         }
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -147,7 +144,7 @@ class QuestionPollForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Nombre de la Variable...',
+                    'placeholder': 'Nombre de la Pregunta...',
                     }),
             'text': forms.Textarea(
                 attrs={
@@ -157,7 +154,7 @@ class QuestionPollForm(forms.ModelForm):
                     }),
             'measurementCriterions': forms.Select(
                 attrs={
-                    'class': 'form-control',
+                    'class': 'form-control form-select',
                     }),
         }
     def clean_name(self):
@@ -193,7 +190,7 @@ class QuestionInterviewForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Nombre de la Variable...',
+                    'placeholder': 'Nombre de la Pregunta...',
                     }),
             'text': forms.Textarea(
                 attrs={
@@ -203,7 +200,7 @@ class QuestionInterviewForm(forms.ModelForm):
                     }),
             'measurementCriterions': forms.Select(
                 attrs={
-                    'class': 'form-control',
+                    'class': 'form-control form-select',
                     }),
         }
     def clean_name(self):

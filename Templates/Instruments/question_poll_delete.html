@@ -1,0 +1,20 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+                <h2 class="modal-title">&iquest; Desea Encuesta &quest;</h2>
+                <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal-body text-center">
+                    <form id="question_poll_form_delete" action="{% url 'Instruments:question_poll_delete' object.id %}" method="POST">
+                    {% csrf_token %}
+                    <h3>Seguro que desea eliminar la encuesta:&nbsp;  
+                    <em>{{object.name}}</em></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" 
+                    class="btn btn-danger" onclick="delete_question_poll();">Confirmar Eliminaci&oacute;n</button>
+                </form>
+                    <button class="btn btn-primary" type="button" onclick="close_modal_delete();">Cancelar</button>
+        </div>
+    </div>
+</div> 

@@ -10,7 +10,7 @@ Varmetric | Observasi&oacute;n
 <div class="container-fluid">
     <div class="card shadow mt-5">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'adminsite' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <a href="{% url 'Instruments:select_instrument' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
             <h3 class="text-start">Listado de Observasiones</h3>
             <button class="btn btn-outline-dark" onclick="open_modal_create_observation('{% url 'Instruments:observation_create' %}')">Observasi&oacute;n &plus;</button>
         </div>
@@ -61,5 +61,5 @@ Varmetric | Observasi&oacute;n
     </div>
 {% endblock body %}
 {% block extrajs %}
-<script src="{% static 'js/' %}"></script>
+<script src="{% static 'js/observation/observation.js' %}"></script>
 {% endblock extrajs %}
