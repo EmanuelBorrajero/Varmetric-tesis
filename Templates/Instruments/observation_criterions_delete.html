@@ -1,0 +1,20 @@
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+                <h2 class="modal-title text-dark">&iquest; Desea Eliminar &quest;</h2>
+                <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal-body text-center">
+                    <form id="observation_criterions_form_delete" action="{% url 'Instruments:observation_criterions_delete' object.id %}"  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h3>Seguro que desea eliminar el criterio de  observaci&oacute;n  
+                    <em>{{object.measurementCriterions.name}}</em></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" 
+                    class="btn btn-danger" onclick="delete_observation_criterions();">Confirmar Eliminaci&oacute;n</button>
+                </form>
+                    <button class="btn btn-primary" type="button" onclick="close_modal_delete();">Cancelar</button>
+        </div>
+    </div>
+</div>

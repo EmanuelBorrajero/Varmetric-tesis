@@ -107,7 +107,6 @@ class MeasurementCriterion(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
-    value = models.IntegerField("Valor Obtenido", default=0)
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, null=True)
     
     def __str__(self):

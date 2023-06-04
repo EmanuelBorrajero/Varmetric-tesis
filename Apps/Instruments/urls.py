@@ -37,4 +37,9 @@ urlpatterns = [
     path('editar/pregunta/entrevista/<pk>', login_required(QuestionInterviewUpdate.as_view()), name='question_interview_update'),
     path('eliminar/pregunta/entrevista/<pk>', login_required(QuestionInterviewDelete.as_view()), name='question_interview_delete'),
 
+    #ObservationCriterions
+    path('listado/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsList.as_view()), name='observation_criterions_list'),
+    path('crear/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsCreate.as_view()), name='observation_criterions_create'),
+    path('editar/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsUpdate.as_view()), name='observation_criterions_update'),
+    path('eliminar/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsDelete.as_view()), name='observation_criterions_delete'),
 ]

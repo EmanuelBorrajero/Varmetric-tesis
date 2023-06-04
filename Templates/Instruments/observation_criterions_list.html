@@ -1,0 +1,66 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Observaci&oacute;n 
+{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mt-5"">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'Instruments:observation_detail' object_list.observation.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">Criterios de Observaci&oacute;n</h3>
+            <button class="btn btn-outline-dark" onclick="open_modal_create_observation_criterions('{% url 'Instruments:observation_criterions_create' object_list.observation.id %}')">Criterios de Observaci&oacute;n &plus;</button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">&numero;</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if object_list.queryset %}
+                        {% for object in object_list.queryset %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{object.measurementCriterions.name}}</td>
+                          <td>{{object.measurementCriterions.description}}</td>
+                          <td>
+                            <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_observation_criterions('{% url 'Instruments:observation_criterions_update' object.id %}')">Editar</button>
+                            <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_observation_criterions('{% url 'Instruments:observation_criterions_delete' object.id %}')">Eliminar</a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <h1>No existen Criterios de Observaci&oacute;n.</h1>
+                        {% endif %} 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+    <div class="modal fade"  id="createObservationCriterions" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="updateObservationCriterions" role="dialog">
+
+    </div>
+    <div class="modal fade"  id="deleteObservationCriterions" role="dialog">
+
+    </div>
+{% endblock body %}
+
+{% block extrajs %}
+<script src="{% static 'js/observation_criterions/observation_criterions.js' %}"></script>
+{% endblock extrajs %}

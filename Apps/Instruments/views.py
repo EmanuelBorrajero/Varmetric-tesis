@@ -208,7 +208,7 @@ class ObservationUpdate(UpdateView):
             return redirect('Instruments:observation_list')
 
 class ObservationDelete(DeleteView):
-    model = Interview
+    model = Observation
     template_name = 'Instruments/observation_delete.html'
 
     def post(self,request,*args,**kwargs):
@@ -418,4 +418,98 @@ class QuestionInterviewDelete(DeleteView):
             return response
         else:
             return redirect('Instruments:interview_list')
+
+#ObservationCriterions
+class ObservationCriterionsList(ListView):
+    model = ObservationCriterions
+    template_name= 'Instruments/observation_criterions_list.html'
+
+    def get_queryset(self):
+        observation = Observation.objects.get(id = self.kwargs['pk'])
+        queryset = self.model.objects.filter(observation = observation)
+        return {'queryset': queryset, 'observation': observation}
+
+class ObservationCriterionsCreate(CreateView):
+    model = ObservationCriterions
+    form_class = ObservationCriterionsForm
+    template_name = 'Instruments/observation_criterions_create.html'
+
+    def get_queryset(self):
+        observation = get_object_or_404(
+                    Observation,
+                    id = self.kwargs['pk']
+                )
+        return observation
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context["observation"] = self.get_queryset()
+        context["form"] = self.form_class
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, self.get_context_data())
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                observation = self.get_queryset()
+                ObservationCriterions.objects.create(
+                    measurementCriterions = form.cleaned_data.get('measurementCriterions'),
+                    observation = observation,
+                )
+                message = 'Criterio de observación creada corréctamente!!'
+                error = 'No hay Error'
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 201
+                return responce
+            else:
+                message = 'El criterio de observación no se ha podido crear!!'
+                error = form.errors
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 400
+                return responce
+        else:
+            return redirect('Instruments:observation_list')
+
+class ObservationCriterionsUpdate(UpdateView):
+    model = ObservationCriterions
+    form_class = ObservationCriterionsForm
+    template_name = 'Instruments/observation_criterions_update.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            form = self.form_class(request.POST, instance = self.get_object())
+            if form.is_valid():
+                form.save()
+                message = 'Criterio de observación modificada corréctamente!!'
+                error = 'No hay Error'
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 201
+                return responce
+            else:
+                message = 'El criterio de observación no se ha podido modificar!!'
+                error = form.errors
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 400
+                return responce
+        else:
+            return redirect('Instruments:observation_list')
+
+class ObservationCriterionsDelete(DeleteView):
+    model = ObservationCriterions
+    template_name = 'Instruments/observation_criterions_delete.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            question = self.get_object()
+            question.delete()
+            message = 'Criterio de observación eliminado corréctamente!!'
+            error = 'No hay Error'
+            response = JsonResponse({'message': message, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('Instruments:observation_list')
 

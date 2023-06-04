@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+                <h2 class="modal-title text-dark">Editar Criterio de Observaci&oacute;n</h2>
+                <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form id="observation_criterions_form_update" action="{% url 'Instruments:observation_criterions_update' object.id %}"  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div id="errorsUpdateObservationCriterions">
+
+                        </div>
+                        {{form.as_p}}
+                    </div>
+                    <div class="modal-footer">
+                    <button id="update_button_observation_criterions" type="button" class="btn btn-primary" onclick="update_observation_criterions();">Aceptar</button>
+                    <button class="btn btn-danger" type="button" onclick="close_modal_update();">Cancelar</button>
+                </form>
+        </div>
+    </div>
+</div>

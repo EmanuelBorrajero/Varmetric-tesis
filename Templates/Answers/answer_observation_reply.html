@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Varmetric | Responder Observacion {% endblock title %}
+
+
+{% block body %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <div class="mb-5">
+            <div class="card shadow  mt-5 mb-5">
+                <div class="card-header">
+                    <h1 class="font-weight-light">{{observation.name}}</h1>
+                    <h5 class="mb-3">{{observation.description}}</h3>
+                </div>
+            <div class="card-body">
+                {% if observation_criterions %}
+                {% for observation_criterion in observation_criterions %}
+            <div class="row gx-4 gx-lg-5 align-items-center my-5">
+                <div class="col-lg-10">
+                    <h3 class="card-title">{{observation_criterion.measurementCriterions.name}}&colon;</h3>
+                    <p>{{observation_criterion.measurementCriterions.description}}</p>
+                </div>
+                <div class="col-lg-2">
+                    <form action="">
+                        {{form.as_p}}
+                    </form>
+                </div>
+            </div>
+                {% endfor %}
+                </div>
+                <div class="card-footer text-center">
+                <a type="submit" class="btn btn-lg btn-success">&check;</a>
+                <a class="btn btn-lg btn-danger" href="{% url 'Answers:answers_obervation_list' %}">&times;</a>
+                </div>
+                {% else %}
+                <h2 class="card-title">Esta Encuesta no tiene preguntas</h2>
+                <a class="btn btn-primary btn-sm" href="{% url 'Answers:answers_obervation_list' %}">&loarr; Atras</a>
+                </div>
+                {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock body %}

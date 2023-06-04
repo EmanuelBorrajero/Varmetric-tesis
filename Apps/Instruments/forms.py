@@ -88,12 +88,10 @@ class ObservationForm(forms.ModelForm):
         fields = [
             'name',
             'description',
-            'observationCriterions',
         ]
         labels = {
             'name': 'Nombre*',
             'description': 'Descripción*',
-            'observationCriterions': 'Criterios de Observación*',
 
 
         }
@@ -109,7 +107,6 @@ class ObservationForm(forms.ModelForm):
                     'rows': '2',
                     'placeholder': 'Ingrese una breve descripción',
                     }),
-            'observationCriterions': forms.CheckboxSelectMultiple(),
         }
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -164,12 +161,12 @@ class QuestionPollForm(forms.ModelForm):
                 raise ValidationError('Caracteres incorrectos en el Nombre')
         return name
 
-    def clean_description(self):
-        description = self.cleaned_data.get('description')
-        for char in description:
+    def clean_text(self):
+        text = self.cleaned_data.get('text')
+        for char in text:
             if char in'`!@#$%^&*()_=+-}{][></"\|~':
-                raise ValidationError('Caracteres incorrectos en la Descripción')
-        return description
+                raise ValidationError('Caracteres incorrectos en el texto de la pregunta')
+        return text
 
 class QuestionInterviewForm(forms.ModelForm):
     class Meta:
@@ -210,9 +207,25 @@ class QuestionInterviewForm(forms.ModelForm):
                 raise ValidationError('Caracteres incorrectos en el Nombre')
         return name
 
-    def clean_description(self):
-        description = self.cleaned_data.get('description')
-        for char in description:
+    def clean_text(self):
+        text = self.cleaned_data.get('text')
+        for char in text:
             if char in'`!@#$%^&*()_=+-}{][></"\|~':
-                raise ValidationError('Caracteres incorrectos en la Descripción')
-        return description
+                raise ValidationError('Caracteres incorrectos en el texto de la pregunta')
+        return text
+
+class ObservationCriterionsForm(forms.ModelForm):
+    class Meta:
+        model = ObservationCriterions
+        fields = [
+            'measurementCriterions',
+        ]
+        labels = {
+            'measurementCriterions': 'Criterio*',
+        }
+        widgets = {
+            'measurementCriterions': forms.Select(
+                attrs={
+                    'class': 'form-control form-select',
+                    }),
+        }

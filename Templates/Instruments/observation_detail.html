@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Varmetric | Varieble {{object.name}}
+Varmetric | Observaci&oacute;n {{object.name}}
 {% endblock title %}
 
 {% block body %}
@@ -15,11 +15,11 @@ Varmetric | Varieble {{object.name}}
         </div>
         <div class="card-body">
             <p class="text-dark">{{object.description}}</p>
-            <ul class="list-group list-group-flush list-group-numbered">
-                {% for obj in object.observationCriterions.all %}
-                <li class="list-group-item"><button class="btn btn-link text-decoration-none" onclick="open_modal_detail_observation('{% url 'Metrics:measurement_criterion_detail' obj.id %}')">{{obj.name}}</button></li>
-                {% endfor %}
-            </ul>
+            <a href="{% url 'Instruments:observation_criterions_list' object.id %}" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-list-ol"></i>
+                </span>
+                <span class="text">Añadir Criterios de Observaci&oacute;n</span>
             </a>
         <div>
         </div>
@@ -27,11 +27,4 @@ Varmetric | Varieble {{object.name}}
     </div>
 </div>
 </div>
-<div class="modal fade" id="detailObservationCriterion" role="dialog">
-
-</div>
 {% endblock body %}
-
-{% block extrajs %}
-<script src="{% static 'js/observation/observation.js' %}"></script>
-{% endblock extrajs %}

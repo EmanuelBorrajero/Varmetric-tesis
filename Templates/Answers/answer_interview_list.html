@@ -9,7 +9,7 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 align-items-center my-5">
         <div class="mb-5">
-            <div class="card shadow">
+            <div class="card shadow mt-5 mb-5">
                 <div class="card-header">
                     <h1 class="font-weight-light">Entrevistas</h1>
                 </div>
@@ -29,7 +29,7 @@
                     <h2 class="card-title">{{object.name}}</h2>
                     <p class="card-text">{{object.description}}</p>
                 </div>
-                <div class="card-footer"><a class="btn btn-primary btn-sm">Responder Entrevista</a>
+                <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'Answers:answers_interview_replay' object.id %}">Responder Entrevista</a>
                 </div>
             </div>
         </div>

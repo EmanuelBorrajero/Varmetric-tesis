@@ -1,17 +1,18 @@
 var $ = jQuery.noConflict();
 
-function open_modal_create_observation(url){
-    $('#createObservation').load(url, function (){
+// Create Observation Criterions
+function open_modal_create_observation_criterions(url){
+    $('#createObservationCriterions').load(url, function (){
         $(this).modal('show');
     });
 }
-//Create Variable
-function create_observation(){
+
+function create_observation_criterions(){
     activ_button_regist();
     $.ajax({
-        data: $('#observation_form_create').serialize(),
-        url: $('#observation_form_create').attr('action'),
-        type: $('#observation_form_create').attr('method'),
+        data: $('#observation_criterions_form_create').serialize(),
+        url: $('#observation_criterions_form_create').attr('action'),
+        type: $('#observation_criterions_form_create').attr('method'),
         success: function (response) {
             notificationSuccess(response.message);
             close_modal_regist();
@@ -26,40 +27,40 @@ function create_observation(){
 }
 
 function activ_button_regist(){
-	if($('#create_button_observation').prop('disabled')){
-		$('#create_button_observation').prop('disabled',false);
+	if($('#create_button_observation_criterions').prop('disabled')){
+		$('#create_button_observation_criterions').prop('disabled',false);
 	}else{
-		$('#create_button_observation').prop('disabled', true);
+		$('#create_button_observation_criterions').prop('disabled', true);
 	}
 }
 
 function close_modal_regist() {
-	$('#createObservation').modal('hide');
+	$('#createObservationCriterions').modal('hide');
 }
 
 function showErrorsRegist(errores) {
-	$('#errorsCreateObservation').html("");
+	$('#errorsCreateObservationCriterions').html("");
 	let error = "";
 	for (let item in errores.responseJSON.error) {
 		error += '<div class = "alert alert-danger" <strong>' + errores.responseJSON.error[item] + '</strong></div>';
 	}
-	$('#errorsCreateObservation').append(error);
+	$('#errorsCreateObservationCriterions').append(error);
 }
 
-//Update Variable
-function open_modal_update_observation(url){
-    $('#updateObservation').load(url, function (){
+//Update Observation Criterions
+function open_modal_update_observation_criterions(url){
+    $('#updateObservationCriterions').load(url, function (){
         $(this).modal('show');
     });
 }
 
-function update_observation(){
+function update_observation_criterions(){
     activ_button_update();
-    var data = new FormData($('#observation_form_update').get(0));
+    var data = new FormData($('#observation_criterions_form_update').get(0));
     $.ajax({
         data: data,
-        url: $('#observation_form_update').attr('action'),
-        type: $('#observation_form_update').attr('method'),
+        url: $('#observation_criterions_form_update').attr('action'),
+        type: $('#observation_criterions_form_update').attr('method'),
         cache: false,
         contentType: false,
         processData: false,
@@ -77,40 +78,40 @@ function update_observation(){
 }
 
 function activ_button_update(){
-	if($('#update_button_observation').prop('disabled')){
-		$('#update_button_observation').prop('disabled',false);
+	if($('#update_button_observation_criterions').prop('disabled')){
+		$('#update_button_observation_criterions').prop('disabled',false);
 	}else{
-		$('#update_button_observation').prop('disabled', true);
+		$('#update_button_observation_criterions').prop('disabled', true);
 	}
 }
 
 function close_modal_update() {
-	$('#updateObservation').modal('hide');
+	$('#updateObservationCriterions').modal('hide');
 }
 
 function showErrorsEdit(errores) {
-	$('#errorsUpdateObservation').html("");
+	$('#errorsUpdateObservationCriterions').html("");
 	let error = "";
 	for (let item in errores.responseJSON.error) {
 		error += '<div class = "alert alert-danger" <strong>' + errores.responseJSON.error[item] + '</strong></div>';
 	}
-	$('#errorsUpdateObservation').append(error);
+	$('#errorsUpdateObservationCriterions').append(error);
 }
 
-//Delete Variable
-function open_modal_delete_observation(url){
-    $('#deleteObservation').load(url, function (){
+//Delete Observation Criterions
+function open_modal_delete_observation_criterions(url){
+    $('#deleteObservationCriterions').load(url, function (){
         $(this).modal('show');
     });
 }
 
-function delete_observation(){
+function delete_observation_criterions(){
     $.ajax({
         data:{
             csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
         },
-        url: $('#observation_form_delete').attr('action'),
-        type: $('#observation_form_delete').attr('method'),
+        url: $('#observation_criterions_form_delete').attr('action'),
+        type: $('#observation_criterions_form_delete').attr('method'),
         success: function (response) {
             notificationSuccess(response.message);
             close_modal_delete();
@@ -124,7 +125,7 @@ function delete_observation(){
 }
 
 function close_modal_delete() {
-	$('#deleteObservation').modal('hide');
+	$('#deleteObservationCriterions').modal('hide');
 }
 
 //SweetAlert2
@@ -143,4 +144,3 @@ function notificationSuccess(mensaje) {
 		icon: 'success'
 	})
 }
-

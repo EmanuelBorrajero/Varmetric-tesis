@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Varmetric | Responder Encuesta {% endblock title %}
+
+
+{% block body %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <div class="mb-5">
+            <div class="card shadow  mt-5 mb-5">
+                <div class="card-header">
+                    <h1 class="font-weight-light">{{poll.name}}</h1>
+                    <h5 class="mb-3">{{poll.description}}</h5>
+                </div>
+            <div class="card-body">
+                {% if question_poll %}
+                {% for question in question_poll %}
+                <h2 class="card-title">{{question.text}}&colon;</h2>
+                <form action="">
+                {{form.as_p}}
+                </form>
+                {% endfor %}
+                </div>
+                <div class="card-footer text-center">
+                <a type="submit" class="btn btn-lg btn-success">&check;</a>
+                <a class="btn btn-lg btn-danger" href="{% url 'Answers:answers_poll_list' %}">&times;</a>
+                </div>
+                {% else %}
+                <h2 class="card-title">Esta Encuesta no tiene preguntas</h2>
+                <a class="btn btn-primary btn-sm" href="{% url 'Answers:answers_poll_list' %}">&loarr; Atras</a>
+                </div>
+                {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock body %}
