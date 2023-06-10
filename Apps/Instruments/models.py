@@ -1,8 +1,7 @@
 import uuid
 from django.db import models
-from django.contrib.auth import get_user_model
-from ..Metrics.models import MeasurementCriterion
-User = get_user_model() 
+from ..AccesControl.models import User
+from ..Metrics.models import MeasurementCriterion 
 
 class Poll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
@@ -77,7 +76,7 @@ class QuestionInterview(models.Model):
 class AnswerPoll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     answer = models.TextField("Respuesta", max_length=255)
-    value = models.FloatField("Valor Obtenido", default=0)
+    value = models.FloatField("Valor Obtenido", default=0, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     questionPoll = models.ForeignKey(QuestionPoll, on_delete=models.CASCADE)
 
@@ -89,7 +88,7 @@ class AnswerPoll(models.Model):
 class AnswerInterview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     answer = models.TextField("Respuesta", max_length=255)
-    value = models.FloatField("Valor Obtenido", default=0)
+    value = models.FloatField("Valor Obtenido", default=0, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     questionInterview = models.ForeignKey(QuestionInterview, on_delete=models.CASCADE)
 
@@ -100,6 +99,7 @@ class AnswerInterview(models.Model):
 
 class ObservationCriterions(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    criterion = models.TextField("Criterio", max_length=255)
     measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
     observation = models.ForeignKey(Observation, on_delete=models.CASCADE)
 
@@ -110,7 +110,7 @@ class ObservationCriterions(models.Model):
 
 class ObservationResult(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    value = models.FloatField("Valor Obtenido", default=0)
+    value = models.FloatField("Valor Obtenido", default=0, null=True, blank=True)
     observationCriterions = models.ForeignKey(ObservationCriterions, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

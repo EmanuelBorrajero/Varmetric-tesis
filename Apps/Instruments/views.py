@@ -186,7 +186,7 @@ class ObservationCreate(CreateView):
 class ObservationUpdate(UpdateView):
     model = Observation
     form_class = ObservationForm
-    template_name = 'Instruments/interview_update.html'
+    template_name = 'Instruments/observation_update.html'
 
     def post(self,request,*args,**kwargs):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':

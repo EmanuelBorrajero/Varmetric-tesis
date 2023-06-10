@@ -11,8 +11,8 @@ Varmetric | Observasi&oacute;n
     <div class="card shadow mt-5">
         <div class="card-header py-3 text-center">
             <a href="{% url 'Instruments:select_instrument' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
-            <h3 class="text-start">Listado de Observasiones</h3>
-            <button class="btn btn-outline-dark" onclick="open_modal_create_observation('{% url 'Instruments:observation_create' %}')">Observasi&oacute;n &plus;</button>
+            <h3 class="text-start">Listado de Observaciones</h3>
+            <button class="btn btn-outline-dark" onclick="open_modal_create_observation('{% url 'Instruments:observation_create' %}')">Observaci&oacute;n &plus;</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -41,7 +41,7 @@ Varmetric | Observasi&oacute;n
                         </tr>
                         {% endfor %}
                         {% else %}
-                        <h1>No existen Observasiones.</h1>
+                        <h1>No existen Observaciones.</h1>
                         {% endif %} 
                     </tbody>
                 </table>

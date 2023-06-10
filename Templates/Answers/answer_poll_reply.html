@@ -16,17 +16,18 @@
                 </div>
             <div class="card-body">
                 {% if question_poll %}
+                <form method="POST" action="{% url 'Answers:answers_poll_replay' poll.id %}">{% csrf_token %}
                 {% for question in question_poll %}
                 <h2 class="card-title">{{question.text}}&colon;</h2>
-                <form action="">
-                {{form.as_p}}
-                </form>
+                <input type="text" id="{{question.name}}" name="{{question.name}}" class="form-control" placeholder="Respuesta...">
+                <input type="hidden" id="user" name="user" class="form-control" placeholder="Usuario" value="{{request.user.id}}">
                 {% endfor %}
                 </div>
                 <div class="card-footer text-center">
-                <a type="submit" class="btn btn-lg btn-success">&check;</a>
+                <button type="submit" class="btn btn-lg btn-success">&check;</button>
                 <a class="btn btn-lg btn-danger" href="{% url 'Answers:answers_poll_list' %}">&times;</a>
                 </div>
+                </form>
                 {% else %}
                 <h2 class="card-title">Esta Encuesta no tiene preguntas</h2>
                 <a class="btn btn-primary btn-sm" href="{% url 'Answers:answers_poll_list' %}">&loarr; Atras</a>

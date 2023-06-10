@@ -20,7 +20,8 @@ Varmetric | Observaci&oacute;n
                     <thead>
                         <tr>
                             <th scope="col">&numero;</th>
-                            <th scope="col">Nombre</th>
+                            <th scope="col">Aspecto a Observar</th>
+                            <th scope="col">Criterio de Medida</th>
                             <th scope="col">Descripción</th>
                             <th scope="col">Opciones</th>
                         </tr>
@@ -30,6 +31,7 @@ Varmetric | Observaci&oacute;n
                         {% for object in object_list.queryset %}
                         <tr>
                           <td>{{forloop.counter}}</td>
+                          <td>{{object.criterion}}</td>
                           <td>{{object.measurementCriterions.name}}</td>
                           <td>{{object.measurementCriterions.description}}</td>
                           <td>

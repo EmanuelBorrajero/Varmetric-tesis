@@ -218,12 +218,18 @@ class ObservationCriterionsForm(forms.ModelForm):
     class Meta:
         model = ObservationCriterions
         fields = [
+            'criterion',
             'measurementCriterions',
         ]
         labels = {
+            'criterion': 'Criterio a Observar',
             'measurementCriterions': 'Criterio*',
         }
         widgets = {
+            'criterion': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }),
             'measurementCriterions': forms.Select(
                 attrs={
                     'class': 'form-control form-select',
