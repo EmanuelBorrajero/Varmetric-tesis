@@ -1,4 +1,15 @@
-from decimal import Decimal
+
+suma = [1,201,3,400,12]
+
+result = sum(suma)
+
+a = 3
+b = 10
+
+print(b/a)
+
+
+
 
 def calculate_very_small_value(max_value, cant_intervals):
     very_small_value = float(0.0)
@@ -6,11 +17,13 @@ def calculate_very_small_value(max_value, cant_intervals):
         resoult_div = str((max_value / cant_intervals))
         integer_values = resoult_div.find('.')
         if integer_values > -1:
-            decimal_values = (len(resoult_div) - (integer_values))
+            float_values = (len(resoult_div) - (integer_values))
         else:
-            decimal_values = 2
-        very_small_value = Decimal(1 / (10 ** decimal_values))
-    return very_small_value
+            float_values = 2
+        very_small_value = float(1 / (10 ** float_values))
+    return very_small_value, 99
+    
+
 
 
 def calculate_intervals(min_value, max_value, cant_intervals):
@@ -18,15 +31,15 @@ def calculate_intervals(min_value, max_value, cant_intervals):
     iterator = 0
     intervals_list = []
     if min_value < max_value and cant_intervals > 2:
-        initial_interval_value = Decimal(min_value)
+        initial_interval_value = float(min_value)
         terminal_interval_value = initial_interval_value + \
-            Decimal((max_value / cant_intervals))
+            float((max_value / cant_intervals))
         interval = [initial_interval_value, terminal_interval_value]
         intervals_list.append(interval)
         while(iterator != cant_intervals - 2):
             initial_interval_value = terminal_interval_value + very_small_value
-            terminal_interval_value = Decimal(initial_interval_value) + \
-                Decimal((max_value / cant_intervals))
+            terminal_interval_value = float(initial_interval_value) + \
+                float((max_value / cant_intervals))
             interval = [initial_interval_value, terminal_interval_value]
             intervals_list.append(interval)
             iterator += 1
@@ -34,4 +47,10 @@ def calculate_intervals(min_value, max_value, cant_intervals):
         return intervals_list
     else:
         intervals_list.append("Valores Errónios")
-    return intervals_list
+    return [round(i,2) for i in intervals_list]
+
+
+
+print(calculate_intervals(3,16,3))
+
+print("El mayor resultado posible es: "+str(result))

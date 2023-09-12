@@ -2,70 +2,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}
-    Varmetric | Autenticaci&oacute;n
-  {% endblock title %}</title>
-  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
-  <link rel="icon" type="image/x-icon" href="{% static 'assets/icon.ico' %}" />
-  <link href="{% static 'css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}
+        Varmetric | Autenticaci&oacute;n
+    {% endblock title %}</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/icon.ico' %}"/>
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'jquery-confirm.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body class="body">
-  {% block body %}
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto mt-3">
-        <div class="card border-0 shadow rounded-3 my-5">
-          <div class="card-body p-4 p-sm-5">
-            <a href="{% url 'index' %}" class="btn btn-lg"><i class="fa fa-arrow-left"></i></a>
-            <img class="img-fluid rounded mx-auto d-block w-50" src="{% static 'assets/img/img.png' %}" alt="load">
-            <h5 class="card-title text-center mb-3 fw-light fs-5">Iniciar Seci&oacute;n</h5>
-            <form method="POST">
-              {% csrf_token %}
-              {% if form.get_invalid_login_error %}
-              <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
-                <strong>Advertencia:</strong>{{form.get_invalid_login_error}}
-              </div>
-              {% endif %}
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="Nombre de Usuario"
-                name="username">
-                <label for="floatingInput">Nombre de Usuario</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Contrase&ntilde;a"
-                name="password">
-                <label for="floatingPassword">Contrase&ntilde;a</label>
-              </div>
-              <!--{{form.captcha}}-->
-              <div class="d-grid">
-                <button class="btn btn-success btn-login text-uppercase fw-bold mt-2" type="submit">Iniciar</button>
-              </div>
-              </div>
-            </form>
-          </div>
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto mt-3">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-4 p-sm-5">
+                        <a href="{% url 'index' %}" class="btn btn-lg"><i class="fa fa-arrow-left"></i></a>
+                        <img class="img-fluid rounded mx-auto d-block w-50" src="{% static 'assets/img/img.png' %}"
+                             alt="load">
+                        <h5 class="card-title text-center mb-3 fw-light fs-5">Iniciar Seci&oacute;n</h5>
+
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% if form.get_invalid_login_error %}
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <button type="button" class="btn-close" data-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    <strong>Advertencia: </strong> Por favor, introduzca un Nombre de Usuario y clave
+                                    correctos. Observe que ambos campos pueden ser sensibles a mayúsculas
+                                </div>
+                            {% endif %}
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput"
+                                       placeholder="Nombre de Usuario"
+                                       name="username" required>
+                                <label for="floatingInput">Nombre de Usuario</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="floatingPassword"
+                                       placeholder="Contrase&ntilde;a"
+                                       name="password" required>
+                                <label for="floatingPassword">Contrase&ntilde;a</label>
+                            </div>
+                            <!--{{form.captcha}}-->
+                            <div class="d-grid">
+                                <button class="btn btn-success btn-login text-uppercase fw-bold mt-2" type="submit">
+                                    Iniciar
+                                </button>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  {% endblock body %}
-  <script src="{% static 'js/jquery.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/all.min.js' %}"></script>
+    </div>
+{% endblock body %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'jquery-confirm.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/all.min.js' %}"></script>
+<script>
+    function mensaje(msj, color = 'red') {
+        $.alert({
+            title: 'ERROR',
+            theme: 'material',
+            type: color,
+            content: msj,
+        });
+    }
+</script>
+<script>
+    {% if  form.errors %}
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+
+                    mensaje('{{ error|escape }}', 'red');
+
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {%endif%}
+    {% if  form.errors %}
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+
+                    mensaje('{{ error|escape }}');
+
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {%endif%}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            mensaje('{{ error|escape }}', 'red');
+        {% endfor %}
+
+    {% endif %}
+
+</script>
 </body>
 <style>
-  .body {
-    background: #4e73df ;
-    background: linear-gradient(to right, #224abe, #4e72df);
+    .body {
+        background: #4e73df;
+        background: linear-gradient(to right, #224abe, #4e72df);
     }
-    
+
     .btn-login {
-    font-size: 0.9rem;
-    letter-spacing: 0.05rem;
-    padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        letter-spacing: 0.05rem;
+        padding: 0.75rem 1rem;
     }
 </style>
 </html>

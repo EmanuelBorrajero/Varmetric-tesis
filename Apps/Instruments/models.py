@@ -1,12 +1,14 @@
 import uuid
 from django.db import models
 from ..AccesControl.models import User
-from ..Metrics.models import MeasurementCriterion 
+from ..Metrics.models import MeasurementCriterion
+
 
 class Poll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
+    users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
@@ -15,6 +17,7 @@ class Poll(models.Model):
         db_table = 'Encuesta'
         verbose_name = 'Encuesta'
         verbose_name_plural = 'Encuesta'
+
 
 class Interview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
@@ -29,11 +32,11 @@ class Interview(models.Model):
         verbose_name = 'Entrevista'
         verbose_name_plural = 'Entrevistas'
 
+
 class Observation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
-
 
     def __str__(self):
         return self.name
@@ -42,6 +45,7 @@ class Observation(models.Model):
         db_table = 'Observación'
         verbose_name = 'Observación'
         verbose_name_plural = 'Observaciones'
+
 
 class QuestionPoll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
@@ -58,6 +62,7 @@ class QuestionPoll(models.Model):
         verbose_name = 'Pregunta de la Encuesta'
         verbose_name_plural = 'Preguntas de la Encuesta'
 
+
 class QuestionInterview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
@@ -73,6 +78,7 @@ class QuestionInterview(models.Model):
         verbose_name = 'Pregunta de la Entrevista'
         verbose_name_plural = 'Preguntas de la Entrevista'
 
+
 class AnswerPoll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     answer = models.TextField("Respuesta", max_length=255)
@@ -84,6 +90,7 @@ class AnswerPoll(models.Model):
         db_table = 'RespuestaEncuesta'
         verbose_name = 'Respuesta Encuesta'
         verbose_name_plural = 'Respuestas Encuesta'
+
 
 class AnswerInterview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
@@ -97,6 +104,7 @@ class AnswerInterview(models.Model):
         verbose_name = 'Respuesta Entrevista'
         verbose_name_plural = 'Respuestas Entrevista'
 
+
 class ObservationCriterions(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     criterion = models.TextField("Criterio", max_length=255)
@@ -108,9 +116,10 @@ class ObservationCriterions(models.Model):
         verbose_name = 'Criterio de Observacion'
         verbose_name_plural = 'Criterios de Observacion'
 
+
 class ObservationResult(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    value = models.FloatField("Valor Obtenido", default=0, null=True, blank=True)
+    value = models.FloatField(verbose_name="Valor Obtenido", default=0, null=True, blank=True)
     observationCriterions = models.ForeignKey(ObservationCriterions, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -118,7 +127,3 @@ class ObservationResult(models.Model):
         db_table = 'ResultadoObservacion'
         verbose_name = 'Resultado de la Observacion'
         verbose_name_plural = 'Resultados de las Observaciones'
-
-
-
-
