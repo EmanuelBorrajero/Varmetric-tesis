@@ -1,0 +1,31 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Revizar Encuesta 
+{% endblock title %}
+
+{% block body %} 
+<div class="container-fluid">
+    <div class="card shadow mt-5">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'Instruments:poll_review_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">{{poll.name}}</h3>
+        </div>
+        <div class="card-body">
+                        {% if answer_poll %}
+                        {% for answer in answer_poll %}
+                        <p>{{answer.questionPoll.text}}</p>
+                        <p>{{answer.user.username}} respondi&oacute;: {{answer.answer}}</p>
+                        {% endfor %}
+                        {% else %}
+                        <h1>No existen Respuestas.</h1>
+                        {% endif %} 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

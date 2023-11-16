@@ -1,9 +1,10 @@
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import View, TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from .models import *
 from .forms import *
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class Instruments(TemplateView):
@@ -485,6 +486,7 @@ class ObservationCriterionsCreate(CreateView):
             if form.is_valid():
                 observation = self.get_queryset()
                 ObservationCriterions.objects.create(
+                    criterion=form.cleaned_data.get('criterion'),
                     measurementCriterions=form.cleaned_data.get('measurementCriterions'),
                     observation=observation,
                 )
@@ -543,3 +545,73 @@ class ObservationCriterionsDelete(DeleteView):
             return response
         else:
             return redirect('Instruments:observation_list')
+
+class ReviewInstruments(TemplateView):
+    template_name = "Instruments/review_instruments.html"
+
+class ReviewPollList(LoginRequiredMixin, ListView):
+    model = Poll
+    template_name = 'Instruments/review_poll_list.html'
+
+class ReviewAnswersPoll(LoginRequiredMixin, View):
+    model = AnswerPoll 
+    template_name = 'Instruments/review_answers_poll.html'
+
+    def get_queryset(self):
+            poll = get_object_or_404(
+                Poll,
+                id=self.kwargs['pk']
+            )
+            return poll
+    def get_context_data(self, **kwargs):
+        context = {}
+        context["poll"] = self.get_queryset()
+        context["question_poll"] = QuestionPoll.objects.filter(poll=self.get_queryset())
+        context["answer_poll"] = []
+        
+        for question in context["question_poll"]:
+            answers = AnswerPoll.objects.filter(questionPoll=question)
+            context["answer_poll"].extend(answers)
+        return context
+    
+    def get(self, request, *args, **kwargs):
+            return render(request, self.template_name, self.get_context_data())
+    
+class ReviewPoll(LoginRequiredMixin, UpdateView):
+    form_class = ReviewPollForm
+    model = AnswerPoll
+    template_name = 'Instruments/review_poll.html'
+
+class ReviewInterviewList(LoginRequiredMixin, ListView):
+    model = Interview
+    template_name = 'Instruments/review_interview_list.html'
+
+class ReviewAnswersInterview(LoginRequiredMixin, View):
+    model = AnswerInterview 
+    template_name = 'Instruments/review_answers_interview.html'
+    
+    def get_queryset(self):
+            interview = get_object_or_404(
+                Interview,
+                id=self.kwargs['pk']
+            )
+            return interview
+    
+    def get_context_data(self, **kwargs):
+        context = {}
+        context["interview"] = self.get_queryset()
+        context["question_interview"] = QuestionInterview.objects.filter(interview=self.get_queryset())
+        context["answer_interview"] = []
+        
+        for question in context["question_interview"]:
+            answers = AnswerInterview.objects.filter(questionInterview=question)
+            context["answer_interview"].extend(answers)
+        return context
+    
+    def get(self, request, *args, **kwargs):
+            return render(request, self.template_name, self.get_context_data())
+
+class ReviewInterview(LoginRequiredMixin, UpdateView):
+    form_class = ReviewInterviewForm
+    model = AnswerInterview
+    template_name = 'Instruments/review_interview.html'

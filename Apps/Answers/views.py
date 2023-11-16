@@ -55,7 +55,11 @@ class AnswerPollReply(View):
 class AnswersInterviewList(ListView):
     model = Interview
     template_name = 'Answers/answer_interview_list.html'
-
+    
+    def get_queryset(self):
+        return Interview.objects.all().exclude(
+            users=self.request.user
+        )
 
 class AnswerInterviewReply(View):
     moldel = QuestionInterview
@@ -88,6 +92,9 @@ class AnswerInterviewReply(View):
                 ),
                 questionInterview=question,
             )
+        interview = self.get_queryset()
+        interview.users.add(self.request.user)
+        interview.save()
         return redirect('Answers:answers_interview_list')
 
 
@@ -96,6 +103,8 @@ class AnswersObservationList(ListView):
     model = Observation
     template_name = 'Answers/answer_observation_list.html'
 
+    def get_queryset(self):
+        return Observation.objects.all()
 
 class AnswerObservationReply(View):
     moldel = ObservationCriterions

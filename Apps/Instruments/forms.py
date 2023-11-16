@@ -235,3 +235,33 @@ class ObservationCriterionsForm(forms.ModelForm):
                     'class': 'form-control form-select',
                     }),
         }
+
+
+class ReviewPollForm(forms.ModelForm):
+    value = forms.FloatField()
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'instance' in kwargs:
+            measurement_criterion = kwargs['instance'].questionPoll.measurementCriterions
+            self.fields['value'].widget.attrs['min'] = measurement_criterion.min_value
+            self.fields['value'].widget.attrs['max'] = measurement_criterion.max_value
+
+    class Meta:
+        model = AnswerPoll
+        fields = ('value', )
+
+class ReviewInterviewForm(forms.ModelForm):
+    value = forms.FloatField()
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'instance' in kwargs:
+            measurement_criterion = kwargs['instance'].questionInterview.measurementCriterions
+            self.fields['value'].widget.attrs['min'] = measurement_criterion.min_value
+            self.fields['value'].widget.attrs['max'] = measurement_criterion.max_value
+
+    class Meta:
+        model = AnswerInterview
+        fields = ('value', )
+

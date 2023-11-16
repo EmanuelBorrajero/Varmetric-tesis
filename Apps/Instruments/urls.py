@@ -3,8 +3,9 @@ from django.contrib.auth.decorators import login_required
 from .views import *
 
 urlpatterns = [
-    #Poll
     path('seleccion/', login_required(Instruments.as_view()), name='select_instrument'),
+
+    #Poll
     path('listado/encuesta/', login_required(PollList.as_view()), name='poll_list'),
     path('crear/encuesta/', login_required(PollCreate.as_view()), name='poll_create'),
     path('editar/encuesta/<pk>', login_required(PollUpdate.as_view()), name='poll_update'),
@@ -42,4 +43,14 @@ urlpatterns = [
     path('crear/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsCreate.as_view()), name='observation_criterions_create'),
     path('editar/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsUpdate.as_view()), name='observation_criterions_update'),
     path('eliminar/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsDelete.as_view()), name='observation_criterions_delete'),
+
+    #REVIEW
+    path('revicion/', login_required(ReviewInstruments.as_view()), name='review_instrument'),
+    path('revicion/encuesta/lista', ReviewPollList.as_view(), name='poll_review_list'),
+    path('revision/respuestas/encuesta/<pk>', ReviewAnswersPoll.as_view(), name='poll_review_answer'),
+    path('revicion/encuesta/<pk>', ReviewPoll.as_view(), name='poll_review'),
+    path('revicion/entrevista/lista', ReviewInterviewList.as_view(), name='interview_review_list'),
+    path('revision/respuestas/entrevista/<pk>', ReviewAnswersInterview.as_view(), name='interview_review_answer'),
+    path('revicion/entrevista/<pk>', ReviewInterview.as_view(), name='interview_review'),
+
 ]

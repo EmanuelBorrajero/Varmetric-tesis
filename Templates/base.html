@@ -30,7 +30,9 @@
                         <li class="nav-item"><a class="nav-link {% if request.path == '/' %} active {% endif %}" href="{% url 'index' %}">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link {% if request.path|slice:':22' == '/respuestas/encuestas/' %} active {% endif %}" href="{% url 'Answers:answers_poll_list' %}">Encuesta</a></li>
                         <li class="nav-item"><a class="nav-link {% if request.path|slice:':24' == '/respuestas/entrevistas/' %} active {% endif %}" href="{% url 'Answers:answers_interview_list' %}">Entrevista</a></li>
+                        {% if request.user.is_staff %}
                         <li class="nav-item"><a class="nav-link {% if request.path|slice:':24' == '/respuestas/observacion/' %} active {% endif %}" href="{% url 'Answers:answers_obervation_list' %}">Observaci&oacute;n</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

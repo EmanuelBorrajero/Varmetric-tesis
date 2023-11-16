@@ -5,10 +5,7 @@ from .models import *
 class VariableForm(forms.ModelForm):
     class Meta:
         model = Variable
-        fields = [
-            'name',
-            'description',
-        ]
+        fields = '__all__'
         labels = {
             'name': 'Nombre*',
             'description': 'Descripción*',
@@ -139,10 +136,7 @@ class IndicatorForm(forms.ModelForm):
 class MeasurementCriterionForm(forms.ModelForm):
     class Meta:
         model = MeasurementCriterion
-        fields = [
-            'name',
-            'description',
-        ]
+        exclude=('indicator',)
         labels = {
             'name': 'Nombre*',
             'description': 'Descripción*',

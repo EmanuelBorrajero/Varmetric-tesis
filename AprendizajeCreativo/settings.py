@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from django.urls import reverse_lazy
 from pathlib import Path
-
+from decouple import config
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x4w&^j$hc6nn#@&5hnzbk9iwjyyebi=(y88o=scf%ml6624&ks'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,10 +80,7 @@ WSGI_APPLICATION = 'AprendizajeCreativo.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'gaprendizaje_creativo',
-    }
+    'default': dj_database_url.parse(config('DB_DEFAULT'), conn_max_age=600)
 }
 
 
@@ -113,9 +111,9 @@ LOGOUT_REDIRECT_URL = reverse_lazy('login')
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'es-pe'
+LANGUAGE_CODE = 'es-cu'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Havana'
 
 USE_I18N = True
 
@@ -134,6 +132,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# from django.db.models impor
 
 
 #RECAPTCHA_PUBLIC_KEY = '6LdeKVwmAAAAAJht1FBE1vxTkfF7W52NkbKVF1_O'

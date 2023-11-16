@@ -108,6 +108,10 @@ class MeasurementCriterion(models.Model):
     name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, null=True)
+    min_value = models.FloatField(blank=True, null=True)
+    max_value = models.FloatField(blank=True, null=True)
+    
+    
     
     def __str__(self):
         return f"{self.name}"

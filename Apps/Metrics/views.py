@@ -319,6 +319,8 @@ class MeasurementCriterionCreate(CreateView):
                 MeasurementCriterion.objects.create(
                     name = form.cleaned_data.get('name'),
                     description = form.cleaned_data.get('description'),
+                    min_value = form.cleaned_data.get('min_value'),
+                    max_value = form.cleaned_data.get('max_value'),
                     indicator = indicator,
                 )
                 message = 'Criterio de Medida creado corréctamente!!'

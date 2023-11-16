@@ -23,6 +23,7 @@ class Interview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80)
     description = models.TextField("Descripción")
+    users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
@@ -85,6 +86,7 @@ class AnswerPoll(models.Model):
     value = models.FloatField("Valor Obtenido", default=0, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     questionPoll = models.ForeignKey(QuestionPoll, on_delete=models.CASCADE)
+    
 
     class Meta:
         db_table = 'RespuestaEncuesta'
