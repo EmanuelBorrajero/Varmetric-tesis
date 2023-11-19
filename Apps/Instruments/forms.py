@@ -38,7 +38,7 @@ class PollForm(forms.ModelForm):
     def clean_description(self):
         description = self.cleaned_data.get('description')
         for char in description:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
@@ -78,7 +78,7 @@ class InterviewForm(forms.ModelForm):
     def clean_description(self):
         description = self.cleaned_data.get('description')
         for char in description:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
@@ -118,7 +118,7 @@ class ObservationForm(forms.ModelForm):
     def clean_description(self):
         description = self.cleaned_data.get('description')
         for char in description:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
@@ -164,7 +164,7 @@ class QuestionPollForm(forms.ModelForm):
     def clean_text(self):
         text = self.cleaned_data.get('text')
         for char in text:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en el texto de la pregunta')
         return text
 
@@ -210,7 +210,7 @@ class QuestionInterviewForm(forms.ModelForm):
     def clean_text(self):
         text = self.cleaned_data.get('text')
         for char in text:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en el texto de la pregunta')
         return text
 

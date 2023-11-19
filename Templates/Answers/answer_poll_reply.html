@@ -11,6 +11,7 @@
         <div class="mb-5">
             <div class="card shadow  mt-5 mb-5">
                 <div class="card-header">
+                    <a class="btn btn-danger float-end" href="{% url 'Answers:answers_poll_list' %}">&times;</a>
                     <h1 class="font-weight-light">{{poll.name}}</h1>
                     <h5 class="mb-3">{{poll.description}}</h5>
                 </div>
@@ -19,7 +20,7 @@
                 <form method="POST" action="{% url 'Answers:answers_poll_replay' poll.id %}">{% csrf_token %}
                 {% for question in question_poll %}
                 <h2 class="card-title">{{question.text}}&colon;</h2>
-                <input type="text" id="{{question.name}}" name="{{question.name}}" class="form-control" placeholder="Respuesta...">
+                <input type="text" id="{{question.name}}" name="{{question.name}}" class="form-control" placeholder="Respuesta..." required>
                 <input type="hidden" id="user" name="user" class="form-control" placeholder="Usuario" value="{{request.user.id}}">
                 {% endfor %}
                 </div>

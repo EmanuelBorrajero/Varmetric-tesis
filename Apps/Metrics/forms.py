@@ -5,7 +5,10 @@ from .models import *
 class VariableForm(forms.ModelForm):
     class Meta:
         model = Variable
-        fields = '__all__'
+        fields = [
+            'name',
+            'description',
+            ]
         labels = {
             'name': 'Nombre*',
             'description': 'Descripción*',
@@ -35,7 +38,7 @@ class VariableForm(forms.ModelForm):
     def clean_description(self):
         description = self.cleaned_data.get('description')
         for char in description:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*()_=+}{][></\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
@@ -82,7 +85,7 @@ class DimensionForm(forms.ModelForm):
     def clean_description(self):
         description = self.cleaned_data.get('description')
         for char in description:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
@@ -129,7 +132,7 @@ class IndicatorForm(forms.ModelForm):
     def clean_description(self):
         description = self.cleaned_data.get('description')
         for char in description:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
@@ -167,6 +170,6 @@ class MeasurementCriterionForm(forms.ModelForm):
     def clean_description(self):
         description = self.cleaned_data.get('description')
         for char in description:
-            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+            if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description

@@ -31,7 +31,7 @@ class AnswerPollReply(View):
     def get_context_data(self, **kwargs):
         context = {}
         context["poll"] = self.get_queryset()
-        context["question_poll"] = self.moldel.objects.filter(poll=self.get_queryset())
+        context["question_poll"] = self.moldel.objects.order_by('name').filter(poll=self.get_queryset())
         return context
 
     def get(self, request, *args, **kwargs):
@@ -75,7 +75,7 @@ class AnswerInterviewReply(View):
     def get_context_data(self, **kwargs):
         context = {}
         context["interview"] = self.get_queryset()
-        context["question_interview"] = self.moldel.objects.filter(interview=self.get_queryset())
+        context["question_interview"] = self.moldel.objects.order_by('name').filter(interview=self.get_queryset())
         return context
 
     def get(self, request, *args, **kwargs):
@@ -121,7 +121,7 @@ class AnswerObservationReply(View):
     def get_context_data(self, **kwargs):
         context = {}
         context["observation"] = self.get_queryset()
-        context["observation_criterions"] = self.moldel.objects.filter(observation=self.get_queryset())
+        context["observation_criterions"] = self.moldel.objects.order_by('criterion').filter(observation=self.get_queryset())
         context["form"] = self.form_class
         return context
 

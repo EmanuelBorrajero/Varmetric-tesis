@@ -3,10 +3,10 @@
 {% load static %}
 
 {% block title %}
-Varmetric | Revizar Encuesta 
+Varmetric | Revizar Encuesta
 {% endblock title %}
 
-{% block body %} 
+{% block body %}
 <div class="container-fluid">
     <div class="card shadow mt-5">
         <div class="card-header py-3 text-center">
@@ -14,18 +14,38 @@ Varmetric | Revizar Encuesta
             <h3 class="text-start">{{poll.name}}</h3>
         </div>
         <div class="card-body">
-                        {% if answer_poll %}
-                        {% for answer in answer_poll %}
-                        <p>{{answer.questionPoll.text}}</p>
-                        <p>{{answer.user.username}} respondi&oacute;: {{answer.answer}}</p>
-                        {% endfor %}
-                        {% else %}
-                        <h1>No existen Respuestas.</h1>
-                        {% endif %} 
-            </div>
+            <div class="table-responsive">
+                <table class="table table-hover" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">&numero;</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Texto de la pregunta</th>
+                            <th scope="col">Valor Obtenido</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+            {% if answer_poll %}
+                {% for answer in answer_poll %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{answer.questionPoll.text}}</td>
+                    <td>{{answer.answer}}</td>
+                    {% if answer.value == 0 %}
+                    <td><a href="{% url 'Instruments:poll_review' answer.id %}" class="btn btn-primary">Valorar</a></td>
+                    {% else %}
+                    <td>{{answer.value}}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+        
+            {% else %}
+            <h1>No existen Respuestas.</h1>
+            {% endif %}
+        </tbody>
+    </table>
         </div>
     </div>
 </div>
-
 
 {% endblock body %}

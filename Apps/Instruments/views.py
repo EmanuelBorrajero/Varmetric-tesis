@@ -255,7 +255,7 @@ class QuestionPollList(ListView):
 
     def get_queryset(self):
         poll = Poll.objects.get(id=self.kwargs['pk'])
-        queryset = self.model.objects.filter(poll=poll)
+        queryset = self.model.objects.order_by('name').filter(poll=poll)
         return {'queryset': queryset, 'poll': poll}
 
 
@@ -355,7 +355,7 @@ class QuestionInterviewList(ListView):
 
     def get_queryset(self):
         interview = Interview.objects.get(id=self.kwargs['pk'])
-        queryset = self.model.objects.filter(interview=interview)
+        queryset = self.model.objects.order_by('name').filter(interview=interview)
         return {'queryset': queryset, 'interview': interview}
 
 
@@ -455,7 +455,7 @@ class ObservationCriterionsList(ListView):
 
     def get_queryset(self):
         observation = Observation.objects.get(id=self.kwargs['pk'])
-        queryset = self.model.objects.filter(observation=observation)
+        queryset = self.model.objects.order_by('criterion').filter(observation=observation)
         return {'queryset': queryset, 'observation': observation}
 
 

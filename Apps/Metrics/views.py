@@ -86,7 +86,7 @@ class DimensionLIst(ListView):
 
     def get_queryset(self):
         variable = Variable.objects.get(id = self.kwargs['pk'])
-        queryset = self.model.objects.filter(variable = variable)
+        queryset = self.model.objects.order_by('name').filter(variable = variable)
         return {'queryset': queryset, 'variable': variable}
 
 class DimensionCreate(CreateView):
@@ -187,7 +187,7 @@ class IndicatorLIst(ListView):
 
     def get_queryset(self):
         dimension = Dimension.objects.get(id = self.kwargs['pk'])
-        queryset = self.model.objects.filter(dimension = dimension)
+        queryset = self.model.objects.order_by('name').filter(dimension = dimension)
         return {'queryset': queryset, 'dimension': dimension}
 
 class IndicatorCreate(CreateView):
@@ -287,7 +287,7 @@ class MeasurementCriterionLIst(ListView):
 
     def get_queryset(self):
         indicator = Indicator.objects.get(id = self.kwargs['pk'])
-        queryset = self.model.objects.filter(indicator = indicator)
+        queryset = self.model.objects.order_by('name').filter(indicator = indicator)
         return {'queryset': queryset, 'indicator': indicator}
 
 class MeasurementCriterionCreate(CreateView):

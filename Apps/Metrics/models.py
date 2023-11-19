@@ -58,7 +58,7 @@ class Scale(models.Model):
 # Variable
 class Variable(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=200)
     description = models.TextField("Descripción")
     scale = models.ManyToManyField(Scale)
 
@@ -73,7 +73,7 @@ class Variable(models.Model):
 # Dimensión
 class Dimension(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=200)
     description = models.TextField("Descripción")
     weigh = models.FloatField("Peso", default=0)
     variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
@@ -89,7 +89,7 @@ class Dimension(models.Model):
 # Indicador
 class Indicator(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=200)
     description = models.TextField("Descripción")
     weigh = models.FloatField("Peso", default=0)
     dimension = models.ForeignKey(Dimension, on_delete=models.CASCADE)
@@ -105,11 +105,11 @@ class Indicator(models.Model):
 # Criterio de Medida
 class MeasurementCriterion(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=200)
     description = models.TextField("Descripción")
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, null=True)
-    min_value = models.FloatField(blank=True, null=True)
-    max_value = models.FloatField(blank=True, null=True)
+    min_value = models.FloatField()
+    max_value = models.FloatField()
     
     
     
