@@ -6,8 +6,9 @@ from ..Metrics.models import MeasurementCriterion
 
 class Poll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=80, unique=True)
     description = models.TextField("Descripción")
+    anonymous = models.BooleanField("Anónimo", default=False)
     users = models.ManyToManyField(User)
 
     def __str__(self):
@@ -21,7 +22,7 @@ class Poll(models.Model):
 
 class Interview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=80, unique=True)
     description = models.TextField("Descripción")
     users = models.ManyToManyField(User)
 
@@ -36,7 +37,7 @@ class Interview(models.Model):
 
 class Observation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=80, unique=True)
     description = models.TextField("Descripción")
 
     def __str__(self):
@@ -50,7 +51,7 @@ class Observation(models.Model):
 
 class QuestionPoll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=80, unique=True)
     text = models.TextField("Texto de la pregunta")
     measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
@@ -66,7 +67,7 @@ class QuestionPoll(models.Model):
 
 class QuestionInterview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=80)
+    name = models.CharField("Nombre", max_length=80, unique=True)
     text = models.TextField("Texto de la pregunta")
     measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
@@ -109,7 +110,7 @@ class AnswerInterview(models.Model):
 
 class ObservationCriterions(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    criterion = models.TextField("Criterio", max_length=255)
+    criterion = models.TextField("Criterio", max_length=255, unique=True)
     measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
     observation = models.ForeignKey(Observation, on_delete=models.CASCADE)
 

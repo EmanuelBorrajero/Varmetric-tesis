@@ -3,17 +3,16 @@
 {% load static %}
 
 {% block title %}
-Varmetric | Entrevista 
+Varmetric | Variebles 
 {% endblock title %}
 
 {% block body %}
 <div class="container-fluid">
     <div class="card shadow mt-5">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'Instruments:select_instrument' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
-            <h3 class="text-start">Listado de Entrevistas</h3>
-            <button class="btn btn-outline-dark" onclick="open_modal_create_interview('{% url 'Instruments:interview_create' %}')">Entrevista &plus;</button>
-        </div>
+            <a href="{% url 'adminsite' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">Listado de Variables</h3>
+    </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table" width="100%" cellspacing="0">
@@ -34,14 +33,12 @@ Varmetric | Entrevista
                           <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
                           <td>
-                            <a class="btn btn-outline-info btn-block" href="{% url 'Instruments:question_interview_list' object.id %}">Ver Detalles</a>
-                            <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_interview('{% url 'Instruments:interview_update' object.id %}')">Editar</button>
-                            <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_interview('{% url 'Instruments:interview_delete' object.id %}')">Eliminar</a>
+                            <a class="btn btn-outline-info btn-block" href="#">Crear Escala</a>
                           </td>
                         </tr>
                         {% endfor %}
                         {% else %}
-                        <h1>No existen Entrevista.</h1>
+                        <h1>No existen Variables.</h1>
                         {% endif %} 
                     </tbody>
                 </table>
@@ -50,16 +47,4 @@ Varmetric | Entrevista
     </div>
 </div>
 </div>
-    <div class="modal fade"  id="createInterview" role="dialog">
-
-    </div>
-    <div class="modal fade" id="updateInterview" role="dialog">
-
-    </div>
-    <div class="modal fade" id="deleteInterview" role="dialog">
-
-    </div>
 {% endblock body %}
-{% block extrajs %}
-<script src="{% static 'js/interview/interview.js' %}"></script>
-{% endblock extrajs %}

@@ -10,7 +10,7 @@ Varmetric | Observaci&oacute;n
 <div class="container-fluid">
     <div class="card shadow mt-5"">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'Instruments:observation_detail' object_list.observation.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <a href="{% url 'Instruments:observation_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
             <h3 class="text-start">Criterios de Observaci&oacute;n</h3>
             <button class="btn btn-outline-dark" onclick="open_modal_create_observation_criterions('{% url 'Instruments:observation_criterions_create' object_list.observation.id %}')">Criterios de Observaci&oacute;n &plus;</button>
         </div>

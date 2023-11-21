@@ -10,7 +10,7 @@ Varmetric | Encuesta
 <div class="container-fluid">
     <div class="card shadow mt-5"">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'Instruments:poll_detail' object_list.poll.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <a href="{% url 'Instruments:poll_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
             <h3 class="text-start">Preguntas de la Encuesta</h3>
             <button class="btn btn-outline-dark" onclick="open_modal_create_question_poll('{% url 'Instruments:question_poll_create' object_list.poll.id %}')">Pregunta &plus;</button>
         </div>

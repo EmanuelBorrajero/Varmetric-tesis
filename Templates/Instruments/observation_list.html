@@ -34,7 +34,7 @@ Varmetric | Observasi&oacute;n
                           <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
                           <td>
-                            <a class="btn btn-outline-info btn-block" href="{% url 'Instruments:observation_detail' object.id %}">Ver Detalles</a>
+                            <a class="btn btn-outline-info btn-block" href="{% url 'Instruments:observation_criterions_list' object.id %}">Ver Detalles</a>
                             <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_observation('{% url 'Instruments:observation_update' object.id %}')">Editar</button>
                             <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_observation('{% url 'Instruments:observation_delete' object.id %}')">Eliminar</a>
                           </td>

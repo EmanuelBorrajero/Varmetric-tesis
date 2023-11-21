@@ -10,7 +10,7 @@ Varmetric | Varieble
 <div class="container-fluid">
     <div class="card shadow mt-5"">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'Metrics:variable_detail' object_list.variable.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <a href="{% url 'Metrics:variable_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
             <h3 class="text-start">Listado de Dimensiones</h3>
             <button class="btn btn-outline-dark" onclick="open_modal_create_dimension('{% url 'Metrics:dimension_create' object_list.variable.id %}')">Dimensi&oacute;n &plus;</button>
         </div>

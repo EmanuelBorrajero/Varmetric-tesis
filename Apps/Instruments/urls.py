@@ -10,21 +10,18 @@ urlpatterns = [
     path('crear/encuesta/', login_required(PollCreate.as_view()), name='poll_create'),
     path('editar/encuesta/<pk>', login_required(PollUpdate.as_view()), name='poll_update'),
     path('eliminar/encuesta/<pk>', login_required(PollDelete.as_view()), name='poll_delete'),
-    path('detalles/encuesta/<pk>', login_required(PollDetail.as_view()), name='poll_detail'),
 
     #Interview
     path('listado/entrevista/', login_required(InterviewList.as_view()), name='interview_list'),
     path('crear/entrevista/', login_required(InterviewCreate.as_view()), name='interview_create'),
     path('editar/entrevista/<pk>', login_required(InterviewUpdate.as_view()), name='interview_update'),
     path('eliminar/entrevista/<pk>', login_required(InterviewDelete.as_view()), name='interview_delete'),
-    path('detalles/entrevista/<pk>', login_required(InterviewDetail.as_view()), name='interview_detail'),
 
     #Observation
     path('listado/observacion/', login_required(ObservationList.as_view()), name='observation_list'),
     path('crear/observacion/', login_required(ObservationCreate.as_view()), name='observation_create'),
     path('editar/observacion/<pk>', login_required(ObservationUpdate.as_view()), name='observation_update'),
     path('eliminar/observacion/<pk>', login_required(ObservationDelete.as_view()), name='observation_delete'),
-    path('detalles/observacion/<pk>', login_required(ObservationDetail.as_view()), name='observation_detail'),
 
     #QuentionPoll
     path('listado/pregunta/encuesta/<pk>', login_required(QuestionPollList.as_view()), name='question_poll_list'),
@@ -48,9 +45,11 @@ urlpatterns = [
     path('revicion/', login_required(ReviewInstruments.as_view()), name='review_instrument'),
     path('revicion/encuesta/lista', ReviewPollList.as_view(), name='poll_review_list'),
     path('revision/respuestas/encuesta/<pk>', ReviewAnswersPoll.as_view(), name='poll_review_answer'),
+    path('revision/respuestas/encuesta/<uuid:poll_id>/usuario/<uuid:user_id>',ReviewAnswersPollUser.as_view(), name='poll_review_answer_user'),
     path('revicion/encuesta/<pk>', ReviewPoll.as_view(), name='poll_review'),
     path('revicion/entrevista/lista', ReviewInterviewList.as_view(), name='interview_review_list'),
     path('revision/respuestas/entrevista/<pk>', ReviewAnswersInterview.as_view(), name='interview_review_answer'),
+    path('revision/respuestas/entrevista/<uuid:interview_id>/usuario/<uuid:user_id>',ReviewAnswersInterviewUser.as_view(), name='interview_review_answer_user'),
     path('revicion/entrevista/<pk>', ReviewInterview.as_view(), name='interview_review'),
 
 ]

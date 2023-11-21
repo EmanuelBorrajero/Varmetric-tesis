@@ -34,7 +34,7 @@ Varmetric | Variebles
                           <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
                           <td>
-                            <a class="btn btn-outline-info btn-block" href="{% url 'Metrics:variable_detail' object.id %}">Ver Detalles</a>
+                            <a class="btn btn-outline-info btn-block" href="{% url 'Metrics:dimension_list' object.id %}">Ver Detalles</a>
                             <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_variable('{% url 'Metrics:variable_update' object.id %}')">Editar</button>
                             <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_variable('{% url 'Metrics:variable_delete' object.id %}')">Eliminar</a>
                           </td>

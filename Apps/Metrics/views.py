@@ -75,10 +75,6 @@ class VariableDelete(DeleteView):
         else:
             return redirect('Metrics:variable_list')
 
-class VariableDetail(DetailView):
-    model = Variable
-    template_name = 'Metrics/variable_detail.html'
-
 #Dimensions
 class DimensionLIst(ListView):
     model = Dimension
@@ -380,3 +376,8 @@ class MeasurementCriterionDelete(DeleteView):
 class MeasurementCriterionDetail(DetailView):
     model = MeasurementCriterion
     template_name = 'Metrics/measurement_criterion_detail.html'
+
+class VariableScaleLIst(ListView):
+    model = Variable
+    template_name= 'Metrics/varieble_scale_list.html'
+

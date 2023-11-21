@@ -8,10 +8,12 @@ class PollForm(forms.ModelForm):
         fields = [
             'name',
             'description',
+            'anonymous',
         ]
         labels = {
             'name': 'Nombre*',
             'description': 'Descripción*',
+            'anonymous': 'Anónimo:',
 
 
         }
@@ -27,6 +29,11 @@ class PollForm(forms.ModelForm):
                     'rows': '2',
                     'placeholder': 'Ingrese una breve descripción',
                     }),
+            'anonymous': forms.CheckboxInput(
+                attrs={
+                    'class': 'ms-2 mt-1',
+                }
+            )
         }
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -244,13 +251,23 @@ class ReviewPollForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if 'instance' in kwargs:
             measurement_criterion = kwargs['instance'].questionPoll.measurementCriterions
+            self.fields['value'].label = measurement_criterion.description
             self.fields['value'].widget.attrs['min'] = measurement_criterion.min_value
             self.fields['value'].widget.attrs['max'] = measurement_criterion.max_value
+            self.fields['value'].widget.attrs['class'] = 'form-control mt-2'
 
     class Meta:
         model = AnswerPoll
         fields = ('value', )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        value = cleaned_data.get('value')
+        measurement_criterion = self.instance.questionPoll.measurementCriterions
+        if value < measurement_criterion.min_value or value > measurement_criterion.max_value:
+            raise forms.ValidationError("El valor debe estar dentro del rango permitido.")
+        return cleaned_data
+    
 class ReviewInterviewForm(forms.ModelForm):
     value = forms.FloatField()
     
@@ -258,10 +275,20 @@ class ReviewInterviewForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if 'instance' in kwargs:
             measurement_criterion = kwargs['instance'].questionInterview.measurementCriterions
+            self.fields['value'].label = measurement_criterion.description
             self.fields['value'].widget.attrs['min'] = measurement_criterion.min_value
             self.fields['value'].widget.attrs['max'] = measurement_criterion.max_value
+            self.fields['value'].widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = AnswerInterview
         fields = ('value', )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        value = cleaned_data.get('value')
+        measurement_criterion = self.instance.questionInterview.measurementCriterions
+        if value < measurement_criterion.min_value or value > measurement_criterion.max_value:
+            raise forms.ValidationError("El valor debe estar dentro del rango permitido.")
+        return cleaned_data
 

@@ -8,7 +8,6 @@ urlpatterns = [
     path('crear/variable/', login_required(VariableCreate.as_view()), name='variable_create'),
     path('editar/variable/<pk>', login_required(VariableUpdate.as_view()), name='variable_update'),
     path('eliminar/variable/<pk>', login_required(VariableDelete.as_view()), name='variable_delete'),
-    path('detalles/variable/<pk>', login_required(VariableDetail.as_view()), name='variable_detail'),
 
     #Dimension
     path('listado/dimensiones/<pk>', login_required(DimensionLIst.as_view()), name='dimension_list'),
@@ -30,4 +29,7 @@ urlpatterns = [
     path('editar/criterio de medida/<pk>', login_required(MeasurementCriterionUpdate.as_view()), name='measurement_criterion_update'),
     path('eliminar/criterio de medida/<pk>', login_required(MeasurementCriterionDelete.as_view()), name='measurement_criterion_delete'),
     path('detalles/criterio de medida/<pk>', login_required(MeasurementCriterionDetail.as_view()), name='measurement_criterion_detail'),
+
+    #Scale
+    path('listado/variables/escala', login_required(VariableScaleLIst.as_view()), name='variable_scale_list'),
 ]

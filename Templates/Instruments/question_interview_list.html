@@ -10,7 +10,7 @@ Varmetric | Entrevista
 <div class="container-fluid">
     <div class="card shadow mt-5"">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'Instruments:interview_detail' object_list.interview.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <a href="{% url 'Instruments:interview_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
             <h3 class="text-start">Preguntas de la Entrevista</h3>
             <button class="btn btn-outline-dark" onclick="open_modal_create_question_interview('{% url 'Instruments:question_interview_create' object_list.interview.id %}')">Pregunta &plus;</button>
         </div>

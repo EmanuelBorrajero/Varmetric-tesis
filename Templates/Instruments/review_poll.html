@@ -1,4 +1,21 @@
-<form>
-    {% csrf_token %}
-{{form.as_p}}
-</form>
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+                <h2 class="modal-title text-dark">Valorar Respuesta</h2>
+                <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form id="value_answer_poll_form" action="{% url 'Instruments:poll_review' object.id %}"  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div id="errorsValueAnswerPoll">
+
+                        </div>
+                        {{form.as_p}}
+                    </div>
+                    <div class="modal-footer">
+                    <button id="value_button_answer_poll" type="button" class="btn btn-primary" onclick="value_answer_poll();">Aceptar</button>
+                    <button class="btn btn-danger" type="button" onclick="close_modal_value_answer_poll();">Cancelar</button>
+                </form>
+        </div>
+    </div>
+</div> 

@@ -3,15 +3,15 @@
 {% load static %}
 
 {% block title %}
-Varmetric | Revizar Entrevista
+Varmetric | Revizar Encuesta
 {% endblock title %}
 
 {% block body %}
 <div class="container-fluid">
     <div class="card shadow mt-5">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'Instruments:interview_review_answer' interview.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
-            <h3 class="text-start">{{interview}}</h3>
+            <a href="{% url 'Instruments:poll_review_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">{{poll.name}}</h3>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -19,23 +19,21 @@ Varmetric | Revizar Entrevista
                     <thead>
                         <tr>
                             <th scope="col">&numero;</th>
-                            <th scope="col">Nombre</th>
                             <th scope="col">Respuesta</th>
-                            <th scope="col">Valor Obtenido</th> 
+                            <th scope="col">Opciones</th> 
                         </tr>
                     </thead>
                     <tbody>
-            {% if user_responses %}
-                {% for answer in user_responses %}
+            {% if users %}
+                {% for user in users %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td>{{answer.questionInterview.text}}</td>
-                    <td>{{answer.answer}}</td>
-                    {% if answer.value == 0 %}
-                    <td><button onclick="open_modal_value_answer_interview('{% url 'Instruments:interview_review' answer.id %}')"  class="btn btn-primary">Valorar</button></td>
+                    {% if poll.anonymous %}
+                    <td>Usuario&nbsp;{{forloop.counter}}</td>
                     {% else %}
-                    <td>{{answer.value}}</td>
+                    <td>{{user.username}}</td>
                     {% endif %}
+                    <td><a class="btn btn-outline-info btn-block" href="{% url 'Instruments:poll_review_answer_user' poll_id=poll.id user_id=user.id %}"  >Revizar</a></td>
                 </tr>
                 {% endfor %}
         
@@ -47,10 +45,5 @@ Varmetric | Revizar Entrevista
         </div>
     </div>
 </div>
-<div class="modal fade"  id="valueAnswerInterview" role="dialog">
 
-</div>
-{% block extrajs %}
-<script src="{% static 'js/review/review_interview.js' %}"></script>
-{% endblock extrajs %}
 {% endblock body %}

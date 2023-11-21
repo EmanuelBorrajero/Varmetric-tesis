@@ -1,66 +1,12 @@
 import uuid
 from django.db import models
 
-# Etiqueta de los Intervalos de la Escala
-class ScaleLabel(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre",max_length=128)
-
-    def __str__(self):
-        self.name
-
-    class Meta:
-        db_table = 'ScaleLabel'
-        verbose_name = 'Etiqueta'
-        verbose_name_plural = 'Etiquetas'
-
-# Rango de los Intervalos
-class Range(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    min_value = models.FloatField(verbose_name="Desde")
-    max_value = models.FloatField(verbose_name="Hasta")
-
-    def __str__(self):
-        return f"{self.min_value} - {self.max_value}"
-
-    class Meta:
-        db_table = 'Range'
-        verbose_name = 'Rango'
-        verbose_name_plural = 'Rangos'
-
-# Intervalos de la Escala
-class Interval(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    rangue = models.ManyToManyField(Range)
-    scaleLabel = models.ManyToManyField(ScaleLabel)
-
-    def __str__(self):
-        return f"{self.interval} significa {self.scaleLabel}"
-
-    class Meta:
-        db_table = 'Interval'
-        verbose_name = 'Intervalo'
-        verbose_name_plural = 'Intervalos'
-
-# Escala
-class Scale(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    interval = models.ManyToManyField(Interval)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = 'Scale'
-        verbose_name = 'Escala'
-        verbose_name_plural = 'Escalas'
-
 # Variable
 class Variable(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=200)
+    name = models.CharField("Nombre", max_length=200, unique=True)
     description = models.TextField("Descripción")
-    scale = models.ManyToManyField(Scale)
+    
 
     def __str__(self):
         return self.name
@@ -70,10 +16,26 @@ class Variable(models.Model):
         verbose_name = 'Variable'
         verbose_name_plural = 'Variables'
 
+# Escala
+class Scale(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    scale_label = models.CharField("Etiqueta", max_length=200)
+    initial_value = models.FloatField("Valor Inicial")
+    final_value = models.FloatField("Valor Final")
+    scale = models.ForeignKey(Variable, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'Scale'
+        verbose_name = 'Escala'
+        verbose_name_plural = 'Escalas'
+
 # Dimensión
 class Dimension(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=200)
+    name = models.CharField("Nombre", max_length=200, unique=True)
     description = models.TextField("Descripción")
     weigh = models.FloatField("Peso", default=0)
     variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
@@ -89,7 +51,7 @@ class Dimension(models.Model):
 # Indicador
 class Indicator(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=200)
+    name = models.CharField("Nombre", max_length=200, unique=True)
     description = models.TextField("Descripción")
     weigh = models.FloatField("Peso", default=0)
     dimension = models.ForeignKey(Dimension, on_delete=models.CASCADE)
@@ -105,7 +67,7 @@ class Indicator(models.Model):
 # Criterio de Medida
 class MeasurementCriterion(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    name = models.CharField("Nombre", max_length=200)
+    name = models.CharField("Nombre", max_length=200, unique=True)
     description = models.TextField("Descripción")
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, null=True)
     min_value = models.FloatField()

@@ -73,6 +73,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Opciones:</h6>
                             <a class="collapse-item" href="{% url 'Metrics:variable_list' %}"><i class="fa fa-superscript mr-1" ></i>Crear Variable</a>
+                            <a class="collapse-item" href="{% url 'Metrics:variable_scale_list' %}"><i class="fa fa-signal mr-1" ></i>Crear Escala</a>
                         </div>
                     </div>
                 </li>
@@ -87,10 +88,14 @@
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                         data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Opciones:</h6>
+                            <h5 class="collapse-header">Opciones:</h5>
+                            <h6 class="collapse-header">Crear:</h6>
                             <a class="collapse-item" href="{% url 'Instruments:poll_list' %}"><i class="fa fa-file-alt mr-1"></i>Encuesta</a>
                             <a class="collapse-item" href="{% url 'Instruments:interview_list' %}"><i class="fa fa-comments mr-1"></i>Entrevista</a>
                             <a class="collapse-item" href="{% url 'Instruments:observation_list' %}"><i class="fa fa-eye mr-1"></i>Observaci&oacute;n</a>
+                            <h6 class="collapse-header">Revisar:</h6>
+                            <a class="collapse-item" href="{% url 'Instruments:poll_review_list' %}"><i class="fa fa-file-alt mr-1"></i>Encuesta</a>
+                            <a class="collapse-item" href="{% url 'Instruments:interview_review_list' %}"><i class="fa fa-comments mr-1"></i>Entrevista</a>
                         </div>
                     </div>
                 </li>

@@ -10,8 +10,8 @@ Varmetric | Revizar Encuesta
 <div class="container-fluid">
     <div class="card shadow mt-5">
         <div class="card-header py-3 text-center">
-            <a href="{% url 'Instruments:poll_review_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
-            <h3 class="text-start">{{poll.name}}</h3>
+            <a href="{% url 'Instruments:poll_review_answer' poll.id %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">{{poll}}</h3>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -20,19 +20,19 @@ Varmetric | Revizar Encuesta
                         <tr>
                             <th scope="col">&numero;</th>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Texto de la pregunta</th>
+                            <th scope="col">Respuesta</th>
                             <th scope="col">Valor Obtenido</th> 
                         </tr>
                     </thead>
                     <tbody>
-            {% if answer_poll %}
-                {% for answer in answer_poll %}
+            {% if user_responses %}
+                {% for answer in user_responses %}
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{answer.questionPoll.text}}</td>
                     <td>{{answer.answer}}</td>
                     {% if answer.value == 0 %}
-                    <td><a href="{% url 'Instruments:poll_review' answer.id %}" class="btn btn-primary">Valorar</a></td>
+                    <td><button onclick="open_modal_value_answer_poll('{% url 'Instruments:poll_review' answer.id %}')"  class="btn btn-primary">Valorar</button></td>
                     {% else %}
                     <td>{{answer.value}}</td>
                     {% endif %}
@@ -47,5 +47,10 @@ Varmetric | Revizar Encuesta
         </div>
     </div>
 </div>
+<div class="modal fade"  id="valueAnswerPoll" role="dialog">
 
+</div>
+{% block extrajs %}
+<script src="{% static 'js/review/review_poll.js' %}"></script>
+{% endblock extrajs %}
 {% endblock body %}

@@ -34,7 +34,7 @@ Varmetric | Encuesta
                           <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
                           <td>
-                            <a class="btn btn-outline-info btn-block" href="{% url 'Instruments:poll_detail' object.id %}">Ver Detalles</a>
+                            <a class="btn btn-outline-info btn-block" href="{% url 'Instruments:question_poll_list' object.id %}">Ver Detalles</a>
                             <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_poll('{% url 'Instruments:poll_update' object.id %}')">Editar</button>
                             <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_poll('{% url 'Instruments:poll_delete' object.id %}')">Eliminar</a>
                           </td>
