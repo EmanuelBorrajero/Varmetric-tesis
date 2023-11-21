@@ -130,6 +130,10 @@ class ObservationForm(forms.ModelForm):
         return description
 
 class QuestionPollForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(QuestionPollForm, self).__init__(*args, **kwargs)
+        self.fields['measurementCriterions'].queryset = MeasurementCriterion.objects.order_by('name')
+
     class Meta:
         model = QuestionPoll
         fields = [
@@ -176,6 +180,9 @@ class QuestionPollForm(forms.ModelForm):
         return text
 
 class QuestionInterviewForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(QuestionInterviewForm, self).__init__(*args, **kwargs)
+        self.fields['measurementCriterions'].queryset = MeasurementCriterion.objects.order_by('name')
     class Meta:
         model = QuestionInterview
         fields = [
@@ -222,6 +229,9 @@ class QuestionInterviewForm(forms.ModelForm):
         return text
 
 class ObservationCriterionsForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ObservationCriterionsForm, self).__init__(*args, **kwargs)
+        self.fields['measurementCriterions'].queryset = MeasurementCriterion.objects.order_by('name')   
     class Meta:
         model = ObservationCriterions
         fields = [
