@@ -26,15 +26,27 @@ Varmetric | Variebles
                         </tr>
                     </thead>
                     <tbody>
-                        {% if object_list %}
-                        {% for object in object_list %}
+                        {% if variable %}
+                        {% for object in variable %}
                         <tr>
                           <td>{{forloop.counter}}</td>
                           <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
+                          {% if scale %}
+                          <td><a class="btn btn-outline-info btn-block" href="{% url 'Metrics:variable_scale_list_pk' object.id %}">Ver Escala</a></td>
+                          {% for object1 in scale %}
+                          {% if object1.scale.id == object.id %}
+                          {% else %}
                           <td>
-                            <a class="btn btn-outline-info btn-block" href="#">Crear Escala</a>
+                            <button class="btn btn-outline-info btn-block" onclick="open_modal_create_scale('{{object.id}}')">Crear Escala</button>
                           </td>
+                                {% endif %}
+                          {% endfor %}
+                          {% else %}
+                         <td>
+                            <button class="btn btn-outline-info btn-block" onclick="open_modal_create_scale('{{object.id}}')">Crear Escala</button>
+                          </td>
+                          {% endif %}
                         </tr>
                         {% endfor %}
                         {% else %}
@@ -47,4 +59,36 @@ Varmetric | Variebles
     </div>
 </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h2 class="modal-title">Crear Escala</h2>
+                    <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-title modal-body" >
+                    <h5>Tenga en cuenta que debe terminar de definir su variable para crear la escala correctamente</h5>
+                    </div>
+                    <div class="modal-body text-center">
+                        <form id="miFormulario" action="{% url 'Metrics:variable_scale_list_create' %}"  method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                        <p>
+                        <label class="float-left" for="count">Cantidad de Intervalos*</label>
+                        <input name="count" id="count" type="number" class="form-control">
+                       </p>
+                     </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" 
+                        class="btn btn-primary" onclick="sendDates();">Aceptar</button>
+                    </form>
+                        <button class="btn btn-danger" type="button" onclick="close_modal_scale();">Cancelar</button>
+            </div>
+        </div>
+    </div>
+  </div>
 {% endblock body %}
+{% block extrajs %}
+<script src="{% static 'js/scale/scale.js' %}"></script>
+{% endblock extrajs %}

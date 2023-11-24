@@ -32,4 +32,7 @@ urlpatterns = [
 
     #Scale
     path('listado/variables/escala', login_required(VariableScaleLIst.as_view()), name='variable_scale_list'),
+    path('listado/variables/escala/<pk>', login_required(ScaleLIst.as_view()), name='variable_scale_list_pk'),
+    path('variables/escala/crear', login_required(VariableScaleCreate.as_view()), name='variable_scale_list_create'),
+    path('variables/escala/crear/etiqueta/<pk>', login_required(VariableScaleUpdate.as_view()), name='variable_scale_create_label')
 ]

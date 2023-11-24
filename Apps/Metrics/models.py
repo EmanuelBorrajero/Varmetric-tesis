@@ -19,13 +19,13 @@ class Variable(models.Model):
 # Escala
 class Scale(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    scale_label = models.CharField("Etiqueta", max_length=200)
+    scale_label = models.CharField("Etiqueta", max_length=200, blank=True, null=True, unique=True)
     initial_value = models.FloatField("Valor Inicial")
     final_value = models.FloatField("Valor Final")
     scale = models.ForeignKey(Variable, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.scale_label
 
     class Meta:
         db_table = 'Scale'

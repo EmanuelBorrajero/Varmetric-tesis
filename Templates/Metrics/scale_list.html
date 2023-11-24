@@ -1,0 +1,59 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Escala 
+{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mt-5">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'Metrics:variable_scale_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">Escala</h3>
+    </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">&numero;</th>
+                            <th scope="col">Etiqueta Ling&uuml;&iacute;stica</th>
+                            <th scope="col">Valor Inicial</th>
+                            <th scale="col">Valor Final</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if scale %}
+                        {% for object in scale %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          {% if object.scale_label %}
+                          <td>{{object.scale_label}}</td>
+                          {% else %}
+                          <td>
+                            <button class="btn btn-outline-info btn-block" onclick="open_modal_create('{% url 'Metrics:variable_scale_create_label' object.id %}')">Definir Etiqueta Ling&uuml;&iacute;stica</button>
+                          </td>
+                          {% endif %} 
+                          <td>{{object.initial_value}}</td>
+                          <td>{{object.final_value}}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <h1>No hay Escala.</h1>
+                        {% endif %} 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal fade" id="createEscale" role="dialog">
+
+</div>
+{% endblock body %}
+{% block extrajs %}
+<script src="{% static 'js/scale/scale.js' %}"></script>
+{% endblock extrajs %}

@@ -143,6 +143,8 @@ class MeasurementCriterionForm(forms.ModelForm):
         labels = {
             'name': 'Nombre*',
             'description': 'Descripción*',
+            'min_value': 'Valor Minimo*',
+            'max_value': 'Valor Máximo*',
 
 
         }
@@ -157,6 +159,14 @@ class MeasurementCriterionForm(forms.ModelForm):
                     'class': 'form-control',
                     'rows': '2',
                     'placeholder': 'Ingrese una breve descripción',
+                    }),
+            'min_value': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    }),
+            'max_value': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
                     }),
         }
 
@@ -173,3 +183,27 @@ class MeasurementCriterionForm(forms.ModelForm):
             if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
+    
+
+class ScaleForm(forms.ModelForm):
+    class Meta:
+        model = Scale
+        fields = [
+            'scale_label',
+            ]
+        labels = {
+            'scale_label': 'Etiqueta Lingüística*',
+        }
+        widgets = {
+            'scale_label': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Etiqueta Lingüística...',
+                    }),
+        }
+    def clean_scale_label(self):
+        scale_label = self.cleaned_data.get('scale_label')
+        for char in scale_label:
+            if char in'`!@#$%^&*()_=+-}{][></"\|~':
+                raise ValidationError('Caracteres incorrectos en la Etiqueta Lingüística')
+        return scale_label

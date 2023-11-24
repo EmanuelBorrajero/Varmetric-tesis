@@ -2,19 +2,19 @@ from django.db.models import Sum, Count
 from .models import Variable, Dimension, Indicator, MeasurementCriterion
 from Apps.Instruments.models import AnswerPoll, AnswerInterview, ObservationResult
 
-def calculate_intervals(min_value, max_value, cant_intervals):
+def calculate_intervals(min_value, max_value, cant_intervals:int):
     iterator = 0
     intervals_list = []
-    if min_value < max_value and cant_intervals > 2:
+    if min_value < max_value and int(cant_intervals) > 2:
         initial_interval_value = float(min_value)
         terminal_interval_value = initial_interval_value + \
-            float((max_value / cant_intervals))
+            float((max_value / int(cant_intervals)))
         interval = [initial_interval_value, terminal_interval_value]
         intervals_list.append(interval)
-        while(iterator != cant_intervals - 2):
+        while(iterator != int(cant_intervals) - 2):
             initial_interval_value = terminal_interval_value + 0.0001
             terminal_interval_value = float(initial_interval_value) + \
-                float((max_value / cant_intervals))
+                float((max_value / int(cant_intervals)))
             interval = [initial_interval_value, terminal_interval_value]
             intervals_list.append(interval)
             iterator += 1

@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from .calculation import calculate_intervals
 from .models import *
 from .forms import *
 
@@ -381,3 +380,63 @@ class VariableScaleLIst(ListView):
     model = Variable
     template_name= 'Metrics/varieble_scale_list.html'
 
+    def get_context_data(self, **kwargs):
+        context = {}
+        context["variable"] = self.get_queryset()
+        context["scale"] = Scale.objects.all()
+        return context
+
+class ScaleLIst(ListView):
+    model = Scale
+    template_name= 'Metrics/scale_list.html'
+
+    def get_queryset(self):
+        variable = get_object_or_404(
+                    Variable,
+                    id = self.kwargs['pk']
+                )
+        return variable
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context["variable"] = self.get_queryset()
+        context["scale"] = self.model.objects.filter(scale=self.kwargs['pk']).order_by('initial_value')
+        return context
+
+class VariableScaleCreate(CreateView):
+    def post(self,request,*args,**kwargs):
+        print('View')
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            from .functions import createScale
+            count = request.POST['count']
+            var_id = request.POST['var_id']
+            createScale(count, var_id)
+            response = JsonResponse({'url': '/metricas/listado/variables/escala/', 'var_id': var_id})
+            return response
+        else:
+            return redirect('variable_scale_list')
+
+    
+class VariableScaleUpdate(UpdateView):
+    model = Scale
+    form_class = ScaleForm
+    template_name = 'Metrics/scale_create.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            form = self.form_class(request.POST, instance = self.get_object())
+            if form.is_valid():
+                form.save()
+                message = 'Etiqueta Lingüística añadida corréctamente!!'
+                error = 'No hay Error'
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 201
+                return responce
+            else:
+                message = 'Etiqueta Lingüística no añadida!!'
+                error = form.errors
+                responce = JsonResponse({'message': message, 'error': error})
+                responce.status_code = 400
+                return responce
+        else:
+            return redirect('Metrics:variable_scale_list')
