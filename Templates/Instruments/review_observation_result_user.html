@@ -1,0 +1,45 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Revizar Observaci&oacute;n 
+{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mt-5">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'Instruments:observation_review_list' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">{{observation.name}}</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">&numero;</th>
+                            <th scope="col">Respuesta</th>
+                            <th scope="col">Opciones</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+            {% if users %}
+                {% for user in users %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{user.username}}</td>
+                    <td><a class="btn btn-outline-info btn-block" href="{% url 'Instruments:observation_review_answer_user' observation_id=observation.id user_id=user.id %}"  >Revizar</a></td>
+                </tr>
+                {% endfor %}
+        
+            {% else %}
+            <h1>No existen Respuestas.</h1>
+            {% endif %}
+        </tbody>
+    </table>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

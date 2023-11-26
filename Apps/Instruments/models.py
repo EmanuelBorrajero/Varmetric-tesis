@@ -53,7 +53,7 @@ class QuestionPoll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80, unique=True)
     text = models.TextField("Texto de la pregunta")
-    measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
+    measurementCriterions = models.OneToOneField(MeasurementCriterion, on_delete=models.CASCADE)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -69,7 +69,7 @@ class QuestionInterview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=80, unique=True)
     text = models.TextField("Texto de la pregunta")
-    measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
+    measurementCriterions = models.OneToOneField(MeasurementCriterion, on_delete=models.CASCADE)
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -81,7 +81,7 @@ class QuestionInterview(models.Model):
         verbose_name_plural = 'Preguntas de la Entrevista'
 
 
-class AnswerPoll(models.Model):
+class AnswerPoll(models.Model): 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     answer = models.TextField("Respuesta", max_length=255)
     value = models.FloatField("Valor Obtenido", default=0, null=True, blank=True)
@@ -111,7 +111,7 @@ class AnswerInterview(models.Model):
 class ObservationCriterions(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     criterion = models.TextField("Criterio", max_length=255, unique=True)
-    measurementCriterions = models.ForeignKey(MeasurementCriterion, on_delete=models.CASCADE)
+    measurementCriterions = models.OneToOneField(MeasurementCriterion, on_delete=models.CASCADE)
     observation = models.ForeignKey(Observation, on_delete=models.CASCADE)
 
     class Meta:

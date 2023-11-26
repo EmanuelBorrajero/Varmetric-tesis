@@ -36,20 +36,26 @@ urlpatterns = [
     path('eliminar/pregunta/entrevista/<pk>', login_required(QuestionInterviewDelete.as_view()), name='question_interview_delete'),
 
     #ObservationCriterions
-    path('listado/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsList.as_view()), name='observation_criterions_list'),
-    path('crear/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsCreate.as_view()), name='observation_criterions_create'),
-    path('editar/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsUpdate.as_view()), name='observation_criterions_update'),
-    path('eliminar/criterio de observacion/observacion/<pk>', login_required(ObservationCriterionsDelete.as_view()), name='observation_criterions_delete'),
+    path('listado/criteriodeobservacion/observacion/<pk>', login_required(ObservationCriterionsList.as_view()), name='observation_criterions_list'),
+    path('crear/criteriodeobservacion/observacion/<pk>', login_required(ObservationCriterionsCreate.as_view()), name='observation_criterions_create'),
+    path('editar/criteriodeobservacion/observacion/<pk>', login_required(ObservationCriterionsUpdate.as_view()), name='observation_criterions_update'),
+    path('eliminar/criteriodeobservacion/observacion/<pk>', login_required(ObservationCriterionsDelete.as_view()), name='observation_criterions_delete'),
 
     #REVIEW
     path('revicion/', login_required(ReviewInstruments.as_view()), name='review_instrument'),
+    #Poll
     path('revicion/encuesta/lista', ReviewPollList.as_view(), name='poll_review_list'),
     path('revision/respuestas/encuesta/<pk>', ReviewAnswersPoll.as_view(), name='poll_review_answer'),
     path('revision/respuestas/encuesta/<uuid:poll_id>/usuario/<uuid:user_id>',ReviewAnswersPollUser.as_view(), name='poll_review_answer_user'),
     path('revicion/encuesta/<pk>', ReviewPoll.as_view(), name='poll_review'),
+    #Interview
     path('revicion/entrevista/lista', ReviewInterviewList.as_view(), name='interview_review_list'),
     path('revision/respuestas/entrevista/<pk>', ReviewAnswersInterview.as_view(), name='interview_review_answer'),
     path('revision/respuestas/entrevista/<uuid:interview_id>/usuario/<uuid:user_id>',ReviewAnswersInterviewUser.as_view(), name='interview_review_answer_user'),
     path('revicion/entrevista/<pk>', ReviewInterview.as_view(), name='interview_review'),
+    #Observation
+    path('revicion/observacion/lista', ReviewObservationList.as_view(), name='observation_review_list'),
+    path('revision/respuestas/observacion/<pk>', ReviewObservation.as_view(), name='observation_review_answer'),
+    path('revision/respuestas/observacion/<uuid:observation_id>/usuario/<uuid:user_id>',ReviewObservationUser.as_view(), name='observation_review_answer_user'),
 
 ]

@@ -556,6 +556,7 @@ class ReviewAnswersPollUser(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user_id = self.kwargs['user_id']
         poll_id = self.kwargs['poll_id']
+        q = QuestionPoll.objects.filter
         user_responses = self.model.objects.filter(user_id=user_id, questionPoll__poll_id=poll_id)
         return user_responses
     
@@ -653,3 +654,40 @@ class ReviewInterview(LoginRequiredMixin, UpdateView):
         else:
             return redirect('Instruments:interview_review_list')
 
+class ReviewObservationList(LoginRequiredMixin, ListView):
+    model = Observation
+    template_name = 'Instruments/review_observation_list.html'
+
+class ReviewObservation(LoginRequiredMixin, ListView):
+    model = ObservationResult 
+    template_name = 'Instruments/review_observation_result_user.html'
+
+
+    def get_queryset(self):
+        observation = get_object_or_404(Observation, id=self.kwargs['pk'])
+        user_responses = ObservationResult.objects.filter(observationCriterions__observation=observation).values('user').distinct()
+        return user_responses
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_responses = self.get_queryset()
+        context['observation'] = get_object_or_404(Observation, id=self.kwargs['pk'])
+        context['users'] = User.objects.filter(id__in=user_responses)
+        return context
+
+class ReviewObservationUser(LoginRequiredMixin, ListView):
+    model = ObservationResult
+    template_name = 'Instruments/review_observation_result.html'
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        observation_id = self.kwargs['observation_id']
+        user_responses = self.model.objects.filter(user_id=user_id, observationCriterions__observation_id=observation_id)
+        return user_responses
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        observation = get_object_or_404(Observation, id=self.kwargs['observation_id'])
+        context['observation'] = observation
+        context['user_responses'] = self.get_queryset()
+        return context

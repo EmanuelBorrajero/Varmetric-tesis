@@ -45,6 +45,11 @@ Varmetric | Escala
                         {% endif %} 
                     </tbody>
                 </table>
+                {% if scale %}
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteAll">
+                    Eliminar Escala
+                </button>
+                {% endif %} 
             </div>
         </div>
     </div>
@@ -52,7 +57,27 @@ Varmetric | Escala
 </div>
 <div class="modal fade" id="createEscale" role="dialog">
 
-</div>
+</div>  
+  <!-- Modal Delete All -->
+  <form method="post">
+    {% csrf_token %}
+  <div class="modal fade " id="modalDeleteAll" tabindex="-1" aria-labelledby="modalDeleteAllLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalDeleteAllLabel">&iquest; Desea Eliminar &quest;</h1>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3>&iquest;Est&aacute; seguro que desea eliminar &quest;</h3>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-danger" name="delete_selected">Eliminar</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock body %}
 {% block extrajs %}
 <script src="{% static 'js/scale/scale.js' %}"></script>

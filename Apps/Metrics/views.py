@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -383,12 +384,18 @@ class VariableScaleLIst(ListView):
     def get_context_data(self, **kwargs):
         context = {}
         context["variable"] = self.get_queryset()
-        context["scale"] = Scale.objects.all()
+        for variable in context["variable"]:
+            scale = Scale.objects.filter(scale=variable)
+            if scale:
+                variable.have_scale = True
+            else:
+                variable.have_scale = False
         return context
 
 class ScaleLIst(ListView):
     model = Scale
     template_name= 'Metrics/scale_list.html'
+    success_url = reverse_lazy('Metrics:variable_scale_list')
 
     def get_queryset(self):
         variable = get_object_or_404(
@@ -402,19 +409,30 @@ class ScaleLIst(ListView):
         context["variable"] = self.get_queryset()
         context["scale"] = self.model.objects.filter(scale=self.kwargs['pk']).order_by('initial_value')
         return context
+    
+    def post(self, request, *args, **kwargs):
+        if 'delete_selected' in request.POST:
+            variable = get_object_or_404(
+                    Variable,
+                    id = self.kwargs['pk']
+                )
+            self.model.objects.filter(scale=variable).delete()
+            return redirect(self.success_url)
+        else:
+            return super().post(request, *args, **kwargs)
 
 class VariableScaleCreate(CreateView):
     def post(self,request,*args,**kwargs):
-        print('View')
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             from .functions import createScale
             count = request.POST['count']
             var_id = request.POST['var_id']
             createScale(count, var_id)
-            response = JsonResponse({'url': '/metricas/listado/variables/escala/', 'var_id': var_id})
-            return response
+            responce = JsonResponse({'url': '/metricas/listado/variables/escala/', 'var_id': var_id})
+            responce.status_code = 201
+            return responce
         else:
-            return redirect('variable_scale_list')
+            return redirect('Metrics:variable_scale_list')
 
     
 class VariableScaleUpdate(UpdateView):
@@ -440,3 +458,4 @@ class VariableScaleUpdate(UpdateView):
                 return responce
         else:
             return redirect('Metrics:variable_scale_list')
+

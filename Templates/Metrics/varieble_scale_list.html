@@ -32,21 +32,13 @@ Varmetric | Variebles
                           <td>{{forloop.counter}}</td>
                           <td>{{object.name}}</td>
                           <td>{{object.description}}</td>
-                          {% if scale %}
-                          <td><a class="btn btn-outline-info btn-block" href="{% url 'Metrics:variable_scale_list_pk' object.id %}">Ver Escala</a></td>
-                          {% for object1 in scale %}
-                          {% if object1.scale.id == object.id %}
-                          {% else %}
-                          <td>
-                            <button class="btn btn-outline-info btn-block" onclick="open_modal_create_scale('{{object.id}}')">Crear Escala</button>
-                          </td>
+                                {% if object.have_scale %}
+                                <td><a class="btn btn-outline-info btn-block" href="{% url 'Metrics:variable_scale_list_pk' object.id %}">Ver Escala</a></td>
+                                {% else %}
+                                <td>
+                                    <button class="btn btn-outline-info btn-block" onclick="open_modal_create_scale('{{object.id}}')">Crear Escala</button>
+                                </td>
                                 {% endif %}
-                          {% endfor %}
-                          {% else %}
-                         <td>
-                            <button class="btn btn-outline-info btn-block" onclick="open_modal_create_scale('{{object.id}}')">Crear Escala</button>
-                          </td>
-                          {% endif %}
                         </tr>
                         {% endfor %}
                         {% else %}

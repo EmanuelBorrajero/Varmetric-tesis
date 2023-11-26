@@ -275,7 +275,7 @@ class ReviewPollForm(forms.ModelForm):
         value = cleaned_data.get('value')
         measurement_criterion = self.instance.questionPoll.measurementCriterions
         if value < measurement_criterion.min_value or value > measurement_criterion.max_value:
-            raise forms.ValidationError("El valor debe estar dentro del rango permitido.")
+            raise forms.ValidationError("El valor debe estar dentro del rango permitido. "+str(measurement_criterion.min_value)+" - "+str(measurement_criterion.max_value))
         return cleaned_data
     
 class ReviewInterviewForm(forms.ModelForm):
@@ -299,6 +299,6 @@ class ReviewInterviewForm(forms.ModelForm):
         value = cleaned_data.get('value')
         measurement_criterion = self.instance.questionInterview.measurementCriterions
         if value < measurement_criterion.min_value or value > measurement_criterion.max_value:
-            raise forms.ValidationError("El valor debe estar dentro del rango permitido.")
+            raise forms.ValidationError("El valor debe estar dentro del rango permitido. "+str(measurement_criterion.min_value)+" - "+str(measurement_criterion.max_value))
         return cleaned_data
 

@@ -1,0 +1,50 @@
+{% extends 'base_admin.html' %}
+
+{% load static %}
+
+{% block title %}
+Varmetric | Revizar Observaci&oacute;n 
+{% endblock title %}
+
+{% block body %} 
+<div class="container-fluid">
+    <div class="card shadow mt-5">
+        <div class="card-header py-3 text-center">
+            <a href="{% url 'Instruments:review_instrument' %}" class="btn float-left"><i class="fa fa-arrow-left"></i></a><br>
+            <h3 class="text-start">Listado de Observaciones</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">&numero;</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripci&oacute;n</th>
+                            <th scope="col">Opciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if object_list %}
+                        {% for object in object_list %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{object.name}}</td>
+                          <td>{{object.description}}</td>
+                          <td>
+                            <a class="btn btn-outline-info btn-block" href="{% url 'Instruments:observation_review_answer' object.id %}">Revizar</a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <h1>No existen Observaciones.</h1>
+                        {% endif %} 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock body %}
