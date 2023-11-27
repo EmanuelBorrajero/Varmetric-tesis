@@ -34,11 +34,28 @@ Varmetric | Revizar Observaci&oacute;n
                 {% endfor %}
         
             {% else %}
-            <h1>No existen Respuestas.</h1>
+            <h1>No existen Observaciones.</h1>
             {% endif %}
         </tbody>
     </table>
+    {% if user_responses %}
+    <div class="text-center">
+    <button onclick="open_modal_result('{% url 'Instruments:get_result_observation' answer_id=user_responses.0.id user_id=user_responses.0.user.id %}')" class="btn btn-primary">Resultado</button>
+    </div>
+    {% endif %}
         </div>
     </div>
 </div>
-{% endblock body %}
+<div class="modal fade"  id="modalResult" role="dialog">
+
+</div>
+{% block extrajs %}
+<script>
+function open_modal_result(url){
+	$('#modalResult').load(url, function (){
+		$(this).modal('show');
+	});
+}
+</script>
+{% endblock extrajs %}
+{% endblock body %} 

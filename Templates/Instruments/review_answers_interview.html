@@ -44,13 +44,28 @@ Varmetric | Revizar Entrevista
             {% endif %}
         </tbody>
     </table>
+    {% if user_responses %}
+        <div class="text-center">
+        <button onclick="open_modal_result('{% url 'Instruments:get_result_interview' answer_id=user_responses.0.id user_id=user_responses.0.user.id %}')" class="btn btn-primary">Resultado</button>
+        </div>
+        {% endif %}
         </div>
     </div>
 </div>
 <div class="modal fade"  id="valueAnswerInterview" role="dialog">
 
 </div>
+<div class="modal fade"  id="modalResult" role="dialog">
+
+</div>
 {% block extrajs %}
+<script>
+function open_modal_result(url){
+	$('#modalResult').load(url, function (){
+		$(this).modal('show');
+	});
+}
+</script>
 <script src="{% static 'js/review/review_interview.js' %}"></script>
 {% endblock extrajs %}
 {% endblock body %}

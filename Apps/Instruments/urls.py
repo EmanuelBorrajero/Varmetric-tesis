@@ -47,15 +47,18 @@ urlpatterns = [
     path('revicion/encuesta/lista', ReviewPollList.as_view(), name='poll_review_list'),
     path('revision/respuestas/encuesta/<pk>', ReviewAnswersPoll.as_view(), name='poll_review_answer'),
     path('revision/respuestas/encuesta/<uuid:poll_id>/usuario/<uuid:user_id>',ReviewAnswersPollUser.as_view(), name='poll_review_answer_user'),
+    path('revision/respuestas/encuesta/resultado/<uuid:answer_id>/usuario/<uuid:user_id>',GetResultPoll.as_view(), name='get_result_poll'),
     path('revicion/encuesta/<pk>', ReviewPoll.as_view(), name='poll_review'),
     #Interview
     path('revicion/entrevista/lista', ReviewInterviewList.as_view(), name='interview_review_list'),
     path('revision/respuestas/entrevista/<pk>', ReviewAnswersInterview.as_view(), name='interview_review_answer'),
     path('revision/respuestas/entrevista/<uuid:interview_id>/usuario/<uuid:user_id>',ReviewAnswersInterviewUser.as_view(), name='interview_review_answer_user'),
+    path('revision/respuestas/entrevista/resultado/<uuid:answer_id>/usuario/<uuid:user_id>',GetResultInterview.as_view(), name='get_result_interview'),
     path('revicion/entrevista/<pk>', ReviewInterview.as_view(), name='interview_review'),
     #Observation
     path('revicion/observacion/lista', ReviewObservationList.as_view(), name='observation_review_list'),
     path('revision/respuestas/observacion/<pk>', ReviewObservation.as_view(), name='observation_review_answer'),
     path('revision/respuestas/observacion/<uuid:observation_id>/usuario/<uuid:user_id>',ReviewObservationUser.as_view(), name='observation_review_answer_user'),
+    path('revision/respuestas/observacion/resultado/<uuid:answer_id>/usuario/<uuid:user_id>',GetResultObservation.as_view(), name='get_result_observation'),
 
 ]

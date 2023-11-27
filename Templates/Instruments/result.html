@@ -1,0 +1,20 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Estado de la Variable</h2>
+            <button class="btn btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card rounded">
+                <div class="card-body text-center">
+                    {% if scale %}
+                    <h3>{{scale}}</h3><br>
+                    {% endif %}
+                    {% if variable_result %}
+                    <h5>{{variable_result}}</h5><br>
+                    {% endif %}
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

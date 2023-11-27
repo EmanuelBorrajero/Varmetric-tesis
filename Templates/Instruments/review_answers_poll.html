@@ -36,21 +36,35 @@ Varmetric | Revizar Encuesta
                     {% else %}
                     <td>{{answer.value}}</td>
                     {% endif %}
+                    {% endfor %}
                 </tr>
-                {% endfor %}
-        
             {% else %}
             <h1>No existen Respuestas.</h1>
             {% endif %}
         </tbody>
     </table>
+        {% if user_responses %}
+        <div class="text-center">
+        <button onclick="open_modal_result('{% url 'Instruments:get_result_poll' answer_id=user_responses.0.id user_id=user_responses.0.user.id %}')" class="btn btn-primary">Resultado</button>
+        </div>
+        {% endif %}
         </div>
     </div>
 </div>
 <div class="modal fade"  id="valueAnswerPoll" role="dialog">
 
 </div>
+<div class="modal fade"  id="modalResult" role="dialog">
+
+</div>
 {% block extrajs %}
+<script>
+function open_modal_result(url){
+	$('#modalResult').load(url, function (){
+		$(this).modal('show');
+	});
+}
+</script>
 <script src="{% static 'js/review/review_poll.js' %}"></script>
 {% endblock extrajs %}
 {% endblock body %}

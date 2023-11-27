@@ -25,10 +25,14 @@
             <div class="row gx-4 gx-lg-5 align-items-center my-5">
                 <div class="col-lg-10">
                     <h4 class="card-title">{{observation_criterion.criterion}}</h4>
-                    <p>{{observation_criterion.measurementCriterions.name}}&colon;&nbsp;{{observation_criterion.measurementCriterions.description}}</p>
+                    <label>{{observation_criterion.measurementCriterions.name}}&colon;&nbsp;{{observation_criterion.measurementCriterions.description}}</label>
                 </div>
                 <div class="col-lg-2">
-                        <input type="number" step="0.1" min="0" max="1" id="{{observation_criterion.criterion}}" name="{{observation_criterion.criterion}}" class="form-control" placeholder="0" required>
+                        <div id="mensaje_error" class="alert alert-danger d-none"></div>
+                        <label>{{observation_criterion.measurementCriterions.min_value}}&nbsp;&#45;&nbsp;{{observation_criterion.measurementCriterions.max_value}}
+                        <input type="number" step="0.1" min="{{observation_criterion.measurementCriterions.min_value}}" max="{{observation_criterion.measurementCriterions.max_value}}" 
+                        id="{{observation_criterion.criterion}}" name="{{observation_criterion.criterion}}"
+                         class="form-control" placeholder="0" required>
                     </div>
                 </div>
                 {% endfor %}
@@ -47,4 +51,24 @@
     </div>
 </div>
 </div>
+{% block extrajs %}
+<script>
+const numberInputs = document.querySelectorAll('input[type="number"]');
+
+numberInputs.forEach(input => {
+    input.addEventListener('change', function() {
+        const valor = parseFloat(this.value);
+        const min = parseFloat(this.min);
+        const max = parseFloat(this.max);
+        if (valor < min || valor > max) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `El valor debe estar entre ${min} y ${max}`
+            });
+            this.value = '';
+        }
+    });
+});</script>
+{% endblock extrajs %}
 {% endblock body %}

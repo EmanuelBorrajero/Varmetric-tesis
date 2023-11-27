@@ -26,25 +26,25 @@ def calculate_intervals(min_value, max_value, cant_intervals:int):
 def get_question_id_poll(answer_id):
     answer = get_object_or_404(AnswerPoll, id=answer_id)
     if answer:
-        question_id = answer.questionPoll
+        question_id = answer.questionPoll.id
         return question_id
 
 def get_criterion_id_poll(question_id):
     question = get_object_or_404(QuestionPoll, id=question_id)
     if question:
-        criterion_id = question.measurementCriterions
+        criterion_id = question.measurementCriterions.id
         return criterion_id
 
 def get_indicator_poll(criterion_id):
     citerion = get_object_or_404(MeasurementCriterion, id=criterion_id)
     if citerion:
-        indicator_id = citerion.indicator
+        indicator_id = citerion.indicator.id
         return indicator_id 
 
 def get_dimension_poll(indicator_id):
     indicator = get_object_or_404(Indicator, id=indicator_id)
     if indicator:
-        dimension_id = indicator.dimension
+        dimension_id = indicator.dimension.id
         return dimension_id
 
 def get_variable_poll(answer_id):
@@ -53,19 +53,24 @@ def get_variable_poll(answer_id):
     indicator_id = get_indicator_poll(criterion_id=criterion_id)
     dimension_id = get_dimension_poll(indicator_id=indicator_id)
     dimension = get_object_or_404(Dimension, id=dimension_id)
-    variable_id = dimension.variable
+    variable_id = dimension.variable.id
     return variable_id 
     
 def criterion_answerpoll_value(criterion_id, user_id):
     criterion = get_object_or_404(MeasurementCriterion, id=criterion_id)
     if criterion:
-        question = get_object_or_404(QuestionPoll, measurementCriterions=criterion)
-        poll_id = question.poll
-        if question:
-            answer = AnswerPoll.objects.filter(questionPoll__poll_id=poll_id, user=user_id)
-            if answer:
-                criterion_value = answer.value
-            return criterion_value
+        question_polls = QuestionPoll.objects.filter(measurementCriterions=criterion)
+        print(question_polls)
+        if question_polls:
+            question = get_object_or_404(QuestionPoll, id=question_polls[0].id)
+            print(question)
+            if question:
+                answer = AnswerPoll.objects.get(questionPoll=question.id, user=user_id)
+                if answer:
+                    criterion_value = answer.value
+                return criterion_value
+    return 0
+
 
 def calculate_criterion_poll(indicator_id, user_id):
     indicator=get_object_or_404(Indicator, id=indicator_id)
@@ -105,25 +110,25 @@ def calculate_variable_poll(variable_id, user_id):
 def get_question_id_interview(answer_id):
     answer = get_object_or_404(AnswerInterview, id=answer_id)
     if answer:
-        question_id = answer.questionInterview
+        question_id = answer.questionInterview.id
         return question_id
 
 def get_criterion_id_interview(question_id):
     question = get_object_or_404(QuestionInterview, id=question_id)
     if question:
-        criterion_id = question.measurementCriterions
+        criterion_id = question.measurementCriterions.id
         return criterion_id
 
 def get_indicator_interview(criterion_id):
     citerion = get_object_or_404(MeasurementCriterion, id=criterion_id)
     if citerion:
-        indicator_id = citerion.indicator
+        indicator_id = citerion.indicator.id
         return indicator_id 
 
 def get_dimension_interview(indicator_id):
     indicator = get_object_or_404(Indicator, id=indicator_id)
     if indicator:
-        dimension_id = indicator.dimension
+        dimension_id = indicator.dimension.id
         return dimension_id
 
 def get_variable_interview(answer_id):
@@ -132,19 +137,21 @@ def get_variable_interview(answer_id):
     indicator_id = get_indicator_interview(criterion_id=criterion_id)
     dimension_id = get_dimension_interview(indicator_id=indicator_id)
     dimension = get_object_or_404(Dimension, id=dimension_id)
-    variable_id = dimension.variable
+    variable_id = dimension.variable.id
     return variable_id 
     
 def criterion_answerinterview_value(criterion_id, user_id):
     criterion = get_object_or_404(MeasurementCriterion, id=criterion_id)
     if criterion:
-        question = get_object_or_404(QuestionInterview, measurementCriterions=criterion)
-        interview_id = question.interview
-        if question:
-            answer = AnswerInterview.objects.filter(questionInterview__interview_id=interview_id, user=user_id)
-            if answer:
-                criterion_value = answer.value
-            return criterion_value
+        question_interviews = QuestionInterview.objects.filter(measurementCriterions=criterion)
+        if question_interviews:
+            question = get_object_or_404(QuestionInterview, id=question_interviews[0].id)
+            if question:
+                answer = AnswerInterview.objects.get(questionInterview=question.id, user=user_id)
+                if answer:
+                    criterion_value = answer.value
+                return criterion_value
+    return 0
 
 def calculate_criterion_interview(indicator_id, user_id):
     indicator=get_object_or_404(Indicator, id=indicator_id)
@@ -184,25 +191,25 @@ def calculate_variable_interview(variable_id, user_id):
 def get_question_id_observation(answer_id):
     answer = get_object_or_404(ObservationResult, id=answer_id)
     if answer:
-        question_id = answer.observationCriterions
+        question_id = answer.observationCriterions.id
         return question_id
 
 def get_criterion_id_observation(question_id):
     question = get_object_or_404(ObservationCriterions, id=question_id)
     if question:
-        criterion_id = question.measurementCriterions
+        criterion_id = question.measurementCriterions.id
         return criterion_id
 
 def get_indicator_observation(criterion_id):
     citerion = get_object_or_404(MeasurementCriterion, id=criterion_id)
     if citerion:
-        indicator_id = citerion.indicator
+        indicator_id = citerion.indicator.id
         return indicator_id 
 
 def get_dimension_observation(indicator_id):
     indicator = get_object_or_404(Indicator, id=indicator_id)
     if indicator:
-        dimension_id = indicator.dimension
+        dimension_id = indicator.dimension.id
         return dimension_id
 
 def get_variable_observation(answer_id):
@@ -211,19 +218,21 @@ def get_variable_observation(answer_id):
     indicator_id = get_indicator_observation(criterion_id=criterion_id)
     dimension_id = get_dimension_observation(indicator_id=indicator_id)
     dimension = get_object_or_404(Dimension, id=dimension_id)
-    variable_id = dimension.variable
+    variable_id = dimension.variable.id
     return variable_id 
     
 def criterion_answerobservation_value(criterion_id, user_id):
     criterion = get_object_or_404(MeasurementCriterion, id=criterion_id)
     if criterion:
-        question = get_object_or_404(ObservationCriterions, measurementCriterions=criterion)
-        observation_id = question.observation
-        if question:
-            answer = ObservationResult.objects.filter(observationCriterions__observation_id=observation_id, user=user_id)
-            if answer:
-                criterion_value = answer.value
-            return criterion_value
+        observation_criterions = ObservationCriterions.objects.filter(measurementCriterions=criterion)
+        if observation_criterions:
+            observation_criterion = get_object_or_404(ObservationCriterions, id=observation_criterions[0].id)
+            if observation_criterion:
+                observation_results = ObservationResult.objects.get(observationCriterions=observation_criterion.id, user=user_id)
+                if observation_results:
+                    criterion_value = observation_results.value
+                return criterion_value
+    return 0
 
 def calculate_criterion_observation(indicator_id, user_id):
     indicator=get_object_or_404(Indicator, id=indicator_id)
@@ -258,3 +267,18 @@ def calculate_variable_observation(variable_id, user_id):
             variable_value+=calculate_indicator_observation(dimension.id, user_id)
         return variable_value
     return variable_value
+
+#Scale
+def decide_scale(variable_id, variable_value):
+    scale = Scale.objects.order_by('initial_value').filter(scale=variable_id)
+    if scale:
+        if variable_value < scale[0].initial_value:
+            return scale[0].scale_label
+        elif variable_value > scale[len(scale)-1].final_value:
+            return scale[len(scale)-1].scale_label
+        else:
+            for instance in scale:
+                if variable_value >= instance.initial_value and variable_value <= instance.final_value:
+                    return instance.scale_label
+    else:
+        return " "

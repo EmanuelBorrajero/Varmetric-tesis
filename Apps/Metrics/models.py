@@ -22,7 +22,7 @@ class Scale(models.Model):
     scale_label = models.CharField("Etiqueta", max_length=200, blank=True, null=True, unique=True)
     initial_value = models.FloatField("Valor Inicial")
     final_value = models.FloatField("Valor Final")
-    scale = models.ForeignKey(Variable, on_delete=models.CASCADE)
+    scale = models.OneToOneField(Variable, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.scale_label

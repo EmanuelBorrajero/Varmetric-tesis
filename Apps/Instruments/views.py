@@ -2,6 +2,7 @@ from django.views.generic import View, TemplateView, ListView, CreateView, Updat
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from Apps.Metrics.calculation import *
 from .models import *
 from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -524,10 +525,11 @@ class ObservationCriterionsDelete(DeleteView):
             return response
         else:
             return redirect('Instruments:observation_list')
-
+#Review
 class ReviewInstruments(TemplateView):
     template_name = "Instruments/review_instruments.html"
 
+#ReviewPoll
 class ReviewPollList(LoginRequiredMixin, ListView):
     model = Poll
     template_name = 'Instruments/review_poll_list.html'
@@ -556,7 +558,6 @@ class ReviewAnswersPollUser(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user_id = self.kwargs['user_id']
         poll_id = self.kwargs['poll_id']
-        q = QuestionPoll.objects.filter
         user_responses = self.model.objects.filter(user_id=user_id, questionPoll__poll_id=poll_id)
         return user_responses
     
@@ -592,6 +593,19 @@ class ReviewPoll(LoginRequiredMixin, UpdateView):
         else:
             return redirect('Instruments:poll_review_list')
 
+
+class GetResultPoll(LoginRequiredMixin,TemplateView):
+    template_name = 'Instruments/result.html'
+
+    def get(self, request, *args, **kwargs):
+        variable_id = get_variable_poll(answer_id=self.kwargs['answer_id'])
+        user_id = self.kwargs['user_id'] 
+        variable_result = calculate_variable_poll(variable_id=variable_id, user_id=user_id)
+        scale = decide_scale(variable_id=variable_id, variable_value=variable_result)
+        return render(request, self.template_name, {'variable_result': variable_result, 'scale': scale})
+
+
+#ReviewInterview
 class ReviewInterviewList(LoginRequiredMixin, ListView):
     model = Interview
     template_name = 'Instruments/review_interview_list.html'
@@ -654,6 +668,17 @@ class ReviewInterview(LoginRequiredMixin, UpdateView):
         else:
             return redirect('Instruments:interview_review_list')
 
+class GetResultInterview(LoginRequiredMixin,TemplateView):
+    template_name = 'Instruments/result.html'
+
+    def get(self, request, *args, **kwargs):
+        variable_id = get_variable_interview(answer_id=self.kwargs['answer_id'])
+        user_id = self.kwargs['user_id'] 
+        variable_result = calculate_variable_interview(variable_id=variable_id, user_id=user_id)
+        scale = decide_scale(variable_id=variable_id, variable_value=variable_result)
+        return render(request, self.template_name, {'variable_result': variable_result, 'scale': scale})
+
+#ReviewObservation
 class ReviewObservationList(LoginRequiredMixin, ListView):
     model = Observation
     template_name = 'Instruments/review_observation_list.html'
@@ -691,3 +716,13 @@ class ReviewObservationUser(LoginRequiredMixin, ListView):
         context['observation'] = observation
         context['user_responses'] = self.get_queryset()
         return context
+
+class GetResultObservation(LoginRequiredMixin,TemplateView):
+    template_name = 'Instruments/result.html'
+
+    def get(self, request, *args, **kwargs):
+        variable_id = get_variable_observation(answer_id=self.kwargs['answer_id'])
+        user_id = self.kwargs['user_id'] 
+        variable_result = calculate_variable_observation(variable_id=variable_id, user_id=user_id)
+        scale = decide_scale(variable_id=variable_id, variable_value=variable_result)
+        return render(request, self.template_name, {'variable_result': variable_result, 'scale': scale})
