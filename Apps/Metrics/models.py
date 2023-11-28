@@ -1,4 +1,5 @@
 import uuid
+from ..AccesControl.models import User
 from django.db import models
 
 # Variable
@@ -6,6 +7,7 @@ class Variable(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=200, unique=True)
     description = models.TextField("Descripción")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
 
     def __str__(self):

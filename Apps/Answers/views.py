@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.views.generic import View, ListView
-
+from AprendizajeCreativo.mixins import IsStaffUserMixin
 from .forms import AnswerObservationReplyForm
 from ..Instruments.models import *
 
@@ -99,14 +99,14 @@ class AnswerInterviewReply(View):
 
 
 # AnswersObservation
-class AnswersObservationList(ListView):
+class AnswersObservationList(IsStaffUserMixin, ListView):
     model = Observation
     template_name = 'Answers/answer_observation_list.html'
 
     def get_queryset(self):
         return Observation.objects.all()
 
-class AnswerObservationReply(View):
+class AnswerObservationReply(IsStaffUserMixin, View):
     moldel = ObservationCriterions
     template_name = 'Answers/answer_observation_reply.html'
     form_class = AnswerObservationReplyForm

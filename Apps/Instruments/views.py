@@ -1,24 +1,25 @@
 from django.views.generic import View, TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
+from AprendizajeCreativo.mixins import IsStaffUserMixin
 from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from Apps.Metrics.calculation import *
 from .models import *
 from .forms import *
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class Instruments(TemplateView):
+class Instruments(IsStaffUserMixin, TemplateView):
     template_name = "Instruments/instruments.html"
 
 
 # Poll
-class PollList(ListView):
+class PollList(IsStaffUserMixin, ListView):
     model = Poll
     template_name = 'Instruments/poll_list.html'
 
 
-class PollCreate(CreateView):
+class PollCreate(IsStaffUserMixin, CreateView):
     model = Poll
     form_class = PollForm
     template_name = 'Instruments/poll_create.html'
@@ -43,7 +44,7 @@ class PollCreate(CreateView):
             return redirect('Instruments:poll_list')
 
 
-class PollUpdate(UpdateView):
+class PollUpdate(IsStaffUserMixin, UpdateView):
     model = Poll
     form_class = PollForm
     template_name = 'Instruments/poll_update.html'
@@ -68,7 +69,7 @@ class PollUpdate(UpdateView):
             return redirect('Instruments:poll_list')
 
 
-class PollDelete(DeleteView):
+class PollDelete(IsStaffUserMixin, DeleteView):
     model = Poll
     template_name = 'Instruments/poll_delete.html'
 
@@ -85,12 +86,12 @@ class PollDelete(DeleteView):
             return redirect('Instruments:poll_list')
 
 # Interview
-class InterviewList(ListView):
+class InterviewList(IsStaffUserMixin, ListView):
     model = Interview
     template_name = 'Instruments/interview_list.html'
 
 
-class InterviewCreate(CreateView):
+class InterviewCreate(IsStaffUserMixin, CreateView):
     model = Interview
     form_class = InterviewForm
     template_name = 'Instruments/interview_create.html'
@@ -115,7 +116,7 @@ class InterviewCreate(CreateView):
             return redirect('Instruments:interview_list')
 
 
-class InterviewUpdate(UpdateView):
+class InterviewUpdate(IsStaffUserMixin, UpdateView):
     model = Interview
     form_class = InterviewForm
     template_name = 'Instruments/interview_update.html'
@@ -140,7 +141,7 @@ class InterviewUpdate(UpdateView):
             return redirect('Instruments:interview_list')
 
 
-class InterviewDelete(DeleteView):
+class InterviewDelete(IsStaffUserMixin, DeleteView):
     model = Interview
     template_name = 'Instruments/interview_delete.html'
 
@@ -157,12 +158,12 @@ class InterviewDelete(DeleteView):
             return redirect('Instruments:interview_list')
 
 # Observation
-class ObservationList(ListView):
+class ObservationList(IsStaffUserMixin, ListView):
     model = Observation
     template_name = 'Instruments/observation_list.html'
 
 
-class ObservationCreate(CreateView):
+class ObservationCreate(IsStaffUserMixin, CreateView):
     model = Observation
     form_class = ObservationForm
     template_name = 'Instruments/observation_create.html'
@@ -187,7 +188,7 @@ class ObservationCreate(CreateView):
             return redirect('Instruments:observation_list')
 
 
-class ObservationUpdate(UpdateView):
+class ObservationUpdate(IsStaffUserMixin, UpdateView):
     model = Observation
     form_class = ObservationForm
     template_name = 'Instruments/observation_update.html'
@@ -212,7 +213,7 @@ class ObservationUpdate(UpdateView):
             return redirect('Instruments:observation_list')
 
 
-class ObservationDelete(DeleteView):
+class ObservationDelete(IsStaffUserMixin, DeleteView):
     model = Observation
     template_name = 'Instruments/observation_delete.html'
 
@@ -229,7 +230,7 @@ class ObservationDelete(DeleteView):
             return redirect('Instruments:observation_list')
 
 # QuestionPoll
-class QuestionPollList(ListView):
+class QuestionPollList(IsStaffUserMixin, ListView):
     model = QuestionPoll
     template_name = 'Instruments/question_poll_list.html'
 
@@ -239,7 +240,7 @@ class QuestionPollList(ListView):
         return {'queryset': queryset, 'poll': poll}
 
 
-class QuestionPollCreate(CreateView):
+class QuestionPollCreate(IsStaffUserMixin, CreateView):
     model = QuestionPoll
     form_class = QuestionPollForm
     template_name = 'Instruments/question_poll_create.html'
@@ -286,7 +287,7 @@ class QuestionPollCreate(CreateView):
             return redirect('Instruments:poll_list')
 
 
-class QuestionPollUpdate(UpdateView):
+class QuestionPollUpdate(IsStaffUserMixin, UpdateView):
     model = QuestionPoll
     form_class = QuestionPollForm
     template_name = 'Instruments/question_poll_update.html'
@@ -311,7 +312,7 @@ class QuestionPollUpdate(UpdateView):
             return redirect('Instruments:poll_list')
 
 
-class QuestionPollDelete(DeleteView):
+class QuestionPollDelete(IsStaffUserMixin, DeleteView):
     model = QuestionPoll
     template_name = 'Instruments/question_poll_delete.html'
 
@@ -329,7 +330,7 @@ class QuestionPollDelete(DeleteView):
 
 
 # QuestionInterview
-class QuestionInterviewList(ListView):
+class QuestionInterviewList(IsStaffUserMixin, ListView):
     model = QuestionInterview
     template_name = 'Instruments/question_interview_list.html'
 
@@ -339,7 +340,7 @@ class QuestionInterviewList(ListView):
         return {'queryset': queryset, 'interview': interview}
 
 
-class QuestionInterviewCreate(CreateView):
+class QuestionInterviewCreate(IsStaffUserMixin, CreateView):
     model = QuestionInterview
     form_class = QuestionInterviewForm
     template_name = 'Instruments/question_interview_create.html'
@@ -386,7 +387,7 @@ class QuestionInterviewCreate(CreateView):
             return redirect('Instruments:interview_list')
 
 
-class QuestionInterviewUpdate(UpdateView):
+class QuestionInterviewUpdate(IsStaffUserMixin, UpdateView):
     model = QuestionInterview
     form_class = QuestionInterviewForm
     template_name = 'Instruments/question_interview_update.html'
@@ -411,7 +412,7 @@ class QuestionInterviewUpdate(UpdateView):
             return redirect('Instruments:interview_list')
 
 
-class QuestionInterviewDelete(DeleteView):
+class QuestionInterviewDelete(IsStaffUserMixin, DeleteView):
     model = QuestionInterview
     template_name = 'Instruments/question_interview_delete.html'
 
@@ -429,7 +430,7 @@ class QuestionInterviewDelete(DeleteView):
 
 
 # ObservationCriterions
-class ObservationCriterionsList(ListView):
+class ObservationCriterionsList(IsStaffUserMixin, ListView):
     model = ObservationCriterions
     template_name = 'Instruments/observation_criterions_list.html'
 
@@ -439,7 +440,7 @@ class ObservationCriterionsList(ListView):
         return {'queryset': queryset, 'observation': observation}
 
 
-class ObservationCriterionsCreate(CreateView):
+class ObservationCriterionsCreate(IsStaffUserMixin, CreateView):
     model = ObservationCriterions
     form_class = ObservationCriterionsForm
     template_name = 'Instruments/observation_criterions_create.html'
@@ -485,7 +486,7 @@ class ObservationCriterionsCreate(CreateView):
             return redirect('Instruments:observation_list')
 
 
-class ObservationCriterionsUpdate(UpdateView):
+class ObservationCriterionsUpdate(IsStaffUserMixin, UpdateView):
     model = ObservationCriterions
     form_class = ObservationCriterionsForm
     template_name = 'Instruments/observation_criterions_update.html'
@@ -510,7 +511,7 @@ class ObservationCriterionsUpdate(UpdateView):
             return redirect('Instruments:observation_list')
 
 
-class ObservationCriterionsDelete(DeleteView):
+class ObservationCriterionsDelete(IsStaffUserMixin, DeleteView):
     model = ObservationCriterions
     template_name = 'Instruments/observation_criterions_delete.html'
 
@@ -526,15 +527,15 @@ class ObservationCriterionsDelete(DeleteView):
         else:
             return redirect('Instruments:observation_list')
 #Review
-class ReviewInstruments(TemplateView):
+class ReviewInstruments(IsStaffUserMixin, TemplateView):
     template_name = "Instruments/review_instruments.html"
 
 #ReviewPoll
-class ReviewPollList(LoginRequiredMixin, ListView):
+class ReviewPollList(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = Poll
     template_name = 'Instruments/review_poll_list.html'
 
-class ReviewAnswersPoll(LoginRequiredMixin, ListView):
+class ReviewAnswersPoll(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = AnswerPoll 
     template_name = 'Instruments/review_answers_poll_user.html'
 
@@ -551,7 +552,7 @@ class ReviewAnswersPoll(LoginRequiredMixin, ListView):
         context['users'] = User.objects.filter(id__in=user_responses)
         return context
     
-class ReviewAnswersPollUser(LoginRequiredMixin, ListView):
+class ReviewAnswersPollUser(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = AnswerPoll
     template_name = 'Instruments/review_answers_poll.html'
 
@@ -569,7 +570,7 @@ class ReviewAnswersPollUser(LoginRequiredMixin, ListView):
         return context
         
 
-class ReviewPoll(LoginRequiredMixin, UpdateView):
+class ReviewPoll(LoginRequiredMixin, IsStaffUserMixin, UpdateView):
     model = AnswerPoll
     form_class = ReviewPollForm
     template_name = 'Instruments/review_poll.html'
@@ -594,7 +595,7 @@ class ReviewPoll(LoginRequiredMixin, UpdateView):
             return redirect('Instruments:poll_review_list')
 
 
-class GetResultPoll(LoginRequiredMixin,TemplateView):
+class GetResultPoll(LoginRequiredMixin, IsStaffUserMixin, TemplateView):
     template_name = 'Instruments/result.html'
 
     def get(self, request, *args, **kwargs):
@@ -606,11 +607,11 @@ class GetResultPoll(LoginRequiredMixin,TemplateView):
 
 
 #ReviewInterview
-class ReviewInterviewList(LoginRequiredMixin, ListView):
+class ReviewInterviewList(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = Interview
     template_name = 'Instruments/review_interview_list.html'
 
-class ReviewAnswersInterview(LoginRequiredMixin, ListView):
+class ReviewAnswersInterview(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = AnswerInterview 
     template_name = 'Instruments/review_answers_interview_user.html'
 
@@ -627,7 +628,7 @@ class ReviewAnswersInterview(LoginRequiredMixin, ListView):
         context['users'] = User.objects.filter(id__in=user_responses)
         return context
 
-class ReviewAnswersInterviewUser(LoginRequiredMixin, ListView):
+class ReviewAnswersInterviewUser(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = AnswerInterview
     template_name = 'Instruments/review_answers_interview.html'
 
@@ -644,7 +645,7 @@ class ReviewAnswersInterviewUser(LoginRequiredMixin, ListView):
         context['user_responses'] = self.get_queryset()
         return context
 
-class ReviewInterview(LoginRequiredMixin, UpdateView):
+class ReviewInterview(LoginRequiredMixin, IsStaffUserMixin, UpdateView):
     model = AnswerInterview
     form_class = ReviewInterviewForm
     template_name = 'Instruments/review_interview.html'
@@ -668,7 +669,7 @@ class ReviewInterview(LoginRequiredMixin, UpdateView):
         else:
             return redirect('Instruments:interview_review_list')
 
-class GetResultInterview(LoginRequiredMixin,TemplateView):
+class GetResultInterview(LoginRequiredMixin, IsStaffUserMixin, TemplateView):
     template_name = 'Instruments/result.html'
 
     def get(self, request, *args, **kwargs):
@@ -679,11 +680,11 @@ class GetResultInterview(LoginRequiredMixin,TemplateView):
         return render(request, self.template_name, {'variable_result': variable_result, 'scale': scale})
 
 #ReviewObservation
-class ReviewObservationList(LoginRequiredMixin, ListView):
+class ReviewObservationList(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = Observation
     template_name = 'Instruments/review_observation_list.html'
 
-class ReviewObservation(LoginRequiredMixin, ListView):
+class ReviewObservation(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = ObservationResult 
     template_name = 'Instruments/review_observation_result_user.html'
 
@@ -700,7 +701,7 @@ class ReviewObservation(LoginRequiredMixin, ListView):
         context['users'] = User.objects.filter(id__in=user_responses)
         return context
 
-class ReviewObservationUser(LoginRequiredMixin, ListView):
+class ReviewObservationUser(LoginRequiredMixin, IsStaffUserMixin, ListView):
     model = ObservationResult
     template_name = 'Instruments/review_observation_result.html'
 
@@ -717,7 +718,7 @@ class ReviewObservationUser(LoginRequiredMixin, ListView):
         context['user_responses'] = self.get_queryset()
         return context
 
-class GetResultObservation(LoginRequiredMixin,TemplateView):
+class GetResultObservation(LoginRequiredMixin, IsStaffUserMixin, TemplateView):
     template_name = 'Instruments/result.html'
 
     def get(self, request, *args, **kwargs):

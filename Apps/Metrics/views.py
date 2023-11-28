@@ -2,16 +2,21 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from AprendizajeCreativo.mixins import IsStaffUserMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from .models import *
 from .forms import *
 
 #Variables
-class VariableLIst(ListView):
+class VariableLIst(IsStaffUserMixin, ListView):
     model = Variable
     template_name= 'Metrics/varieble_list.html'
 
-class VariableCreate(CreateView):
+    def get_queryset(self):
+        queryset = self.model.objects.filter(user=self.request.user)
+        return queryset
+
+class VariableCreate(IsStaffUserMixin, CreateView):
     model = Variable
     form_class = VariableForm
     template_name = 'Metrics/variable_create.html'
@@ -20,7 +25,11 @@ class VariableCreate(CreateView):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             form = self.form_class(request.POST)
             if form.is_valid():
-                form.save()
+                self.model.objects.create(
+                    name = form.cleaned_data.get('name'),
+                    description = form.cleaned_data.get('description'),
+                    user = self.request.user
+                )
                 message = 'Variable creada corréctamente!!'
                 error = 'No hay Error'
                 responce = JsonResponse({'message': message, 'error': error})
@@ -35,7 +44,7 @@ class VariableCreate(CreateView):
         else:
             return redirect('Metrics:variable_list')
 
-class VariableUpdate(UpdateView):
+class VariableUpdate(IsStaffUserMixin, UpdateView):
     model = Variable
     form_class = VariableForm
     template_name = 'Metrics/variable_update.html'
@@ -59,7 +68,7 @@ class VariableUpdate(UpdateView):
         else:
             return redirect('Metrics:variable_list')
 
-class VariableDelete(DeleteView):
+class VariableDelete(IsStaffUserMixin, DeleteView):
     model = Variable
     template_name = 'Metrics/variable_delete.html'
 
@@ -76,7 +85,7 @@ class VariableDelete(DeleteView):
             return redirect('Metrics:variable_list')
 
 #Dimensions
-class DimensionLIst(ListView):
+class DimensionLIst(IsStaffUserMixin, ListView):
     model = Dimension
     template_name= 'Metrics/variable_dimensions.html'
 
@@ -85,7 +94,7 @@ class DimensionLIst(ListView):
         queryset = self.model.objects.order_by('name').filter(variable = variable)
         return {'queryset': queryset, 'variable': variable}
 
-class DimensionCreate(CreateView):
+class DimensionCreate(IsStaffUserMixin, CreateView):
     model = Dimension
     form_class = DimensionForm
     template_name = 'Metrics/dimension_create.html'
@@ -131,7 +140,7 @@ class DimensionCreate(CreateView):
         else:
             return redirect('Metrics:dimension_list')
 
-class DimensionUpdate(UpdateView):
+class DimensionUpdate(IsStaffUserMixin, UpdateView):
     model = Dimension
     form_class = DimensionForm
     template_name = 'Metrics/dimension_update.html'
@@ -155,7 +164,7 @@ class DimensionUpdate(UpdateView):
         else:
             return redirect('Metrics:dimension_list')
 
-class DimensionDelete(DeleteView):
+class DimensionDelete(IsStaffUserMixin, DeleteView):
     model = Dimension
     template_name = 'Metrics/dimension_delete.html'
 
@@ -172,12 +181,12 @@ class DimensionDelete(DeleteView):
             return redirect('Metrics:dimension_list')
 
 
-class DimensionDetail(DetailView):
+class DimensionDetail(IsStaffUserMixin, DetailView):
     model = Dimension
     template_name = 'Metrics/dimension_detail.html'
 
 #Indicators
-class IndicatorLIst(ListView):
+class IndicatorLIst(IsStaffUserMixin, ListView):
     model = Indicator
     template_name= 'Metrics/dimensions_indicator.html'
 
@@ -186,7 +195,7 @@ class IndicatorLIst(ListView):
         queryset = self.model.objects.order_by('name').filter(dimension = dimension)
         return {'queryset': queryset, 'dimension': dimension}
 
-class IndicatorCreate(CreateView):
+class IndicatorCreate(IsStaffUserMixin, CreateView):
     model = Indicator
     form_class = IndicatorForm
     template_name = 'Metrics/indicator_create.html'
@@ -232,7 +241,7 @@ class IndicatorCreate(CreateView):
         else:
             return redirect('Metrics:indicator_list')
 
-class IndicatorUpdate(UpdateView):
+class IndicatorUpdate(IsStaffUserMixin, UpdateView):
     model = Indicator
     form_class = IndicatorForm
     template_name = 'Metrics/indicator_update.html'
@@ -256,7 +265,7 @@ class IndicatorUpdate(UpdateView):
         else:
             return redirect('Metrics:indicator_list')
 
-class IndicatorDelete(DeleteView):
+class IndicatorDelete(IsStaffUserMixin, DeleteView):
     model = Indicator
     template_name = 'Metrics/indicator_delete.html'
 
@@ -272,12 +281,12 @@ class IndicatorDelete(DeleteView):
         else:
             return redirect('Metrics:indicator_list')
 
-class IndicatorDetail(DetailView):
+class IndicatorDetail(IsStaffUserMixin, DetailView):
     model = Indicator
     template_name = 'Metrics/indicator_detail.html'
 
 #Measurement Criterion
-class MeasurementCriterionLIst(ListView):
+class MeasurementCriterionLIst(IsStaffUserMixin, ListView):
     model = MeasurementCriterion
     template_name= 'Metrics/indicator_measurement_criterion.html'
 
@@ -286,7 +295,7 @@ class MeasurementCriterionLIst(ListView):
         queryset = self.model.objects.order_by('name').filter(indicator = indicator)
         return {'queryset': queryset, 'indicator': indicator}
 
-class MeasurementCriterionCreate(CreateView):
+class MeasurementCriterionCreate(IsStaffUserMixin, CreateView):
     model = MeasurementCriterion
     form_class = MeasurementCriterionForm
     template_name = 'Metrics/measurement_criterion_create.html'
@@ -333,7 +342,7 @@ class MeasurementCriterionCreate(CreateView):
         else:
             return redirect('Metrics:measurement_criterion_list')
 
-class MeasurementCriterionUpdate(UpdateView):
+class MeasurementCriterionUpdate(IsStaffUserMixin, UpdateView):
     model = MeasurementCriterion
     form_class = MeasurementCriterionForm
     template_name = 'Metrics/measurement_criterion_update.html'
@@ -357,7 +366,7 @@ class MeasurementCriterionUpdate(UpdateView):
         else:
             return redirect('Metrics:measurement_criterion_list')
 
-class MeasurementCriterionDelete(DeleteView):
+class MeasurementCriterionDelete(IsStaffUserMixin, DeleteView):
     model = MeasurementCriterion
     template_name = 'Metrics/measurement_criterion_delete.html'
 
@@ -373,13 +382,17 @@ class MeasurementCriterionDelete(DeleteView):
         else:
             return redirect('Metrics:measurement_criterion_list')
 
-class MeasurementCriterionDetail(DetailView):
+class MeasurementCriterionDetail(IsStaffUserMixin, DetailView):
     model = MeasurementCriterion
     template_name = 'Metrics/measurement_criterion_detail.html'
 
 class VariableScaleLIst(ListView):
     model = Variable
     template_name= 'Metrics/varieble_scale_list.html'
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(user=self.request.user)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -392,7 +405,7 @@ class VariableScaleLIst(ListView):
                 variable.have_scale = False
         return context
 
-class ScaleLIst(ListView):
+class ScaleLIst(IsStaffUserMixin, ListView):
     model = Scale
     template_name= 'Metrics/scale_list.html'
     success_url = reverse_lazy('Metrics:variable_scale_list')
@@ -421,7 +434,7 @@ class ScaleLIst(ListView):
         else:
             return super().post(request, *args, **kwargs)
 
-class VariableScaleCreate(CreateView):
+class VariableScaleCreate(IsStaffUserMixin, CreateView):
     def post(self,request,*args,**kwargs):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             from .functions import createScale
@@ -435,7 +448,7 @@ class VariableScaleCreate(CreateView):
             return redirect('Metrics:variable_scale_list')
 
     
-class VariableScaleUpdate(UpdateView):
+class VariableScaleUpdate(IsStaffUserMixin, UpdateView):
     model = Scale
     form_class = ScaleForm
     template_name = 'Metrics/scale_create.html'

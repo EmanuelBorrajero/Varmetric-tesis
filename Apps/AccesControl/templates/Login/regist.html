@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}
-        Varmetric | Autenticaci&oacute;n
+        Varmetric | Registrarse
     {% endblock title %}</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/x-icon" href="{% static 'assets/icon.ico' %}"/>
@@ -23,39 +23,17 @@
                         <a href="{% url 'index' %}" class="btn btn-lg"><i class="fa fa-arrow-left"></i></a>
                         <img class="img-fluid rounded mx-auto d-block w-50" src="{% static 'assets/img/img.png' %}"
                              alt="load">
-                        <h5 class="card-title text-center mb-3 fw-light fs-5">Iniciar Seci&oacute;n</h5>
+                        <h5 class="card-title text-center mb-3 fw-light fs-5">Crear Cuenta</h5>
 
 
                         <form method="POST">
                             {% csrf_token %}
-                            {% if form.get_invalid_login_error %}
-                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <button type="button" class="btn-close" data-dismiss="alert"
-                                            aria-label="Close"></button>
-                                    <strong>Advertencia: </strong> Por favor, introduzca un Nombre de Usuario y clave
-                                    correctos. Observe que ambos campos pueden ser sensibles a mayúsculas
-                                </div>
-                            {% endif %}
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput"
-                                       placeholder="Nombre de Usuario"
-                                       name="username" required>
-                                <label for="floatingInput">Nombre de Usuario</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingPassword"
-                                       placeholder="Contrase&ntilde;a"
-                                       name="password" required>
-                                <label for="floatingPassword">Contrase&ntilde;a</label>
-                            </div>
-                            <!--{{form.captcha}}-->
+                            <div class="form-floating">
+                            {{form.as_p}} 
                             <div class="d-grid">
                                 <button class="btn btn-success btn-login text-uppercase fw-bold mt-2" type="submit">
-                                    Iniciar
+                                    Aceptar
                                 </button>
-                                <a class="btn btn-primary btn-login text-uppercase fw-bold mt-3" href="{% url 'regis_user' %}">
-                                    Registrarse
-                                </a>
                             </div>
                     </div>
                     </form>
@@ -86,17 +64,6 @@
                 {% for error in field.errors %}
 
                     mensaje('{{ error|escape }}', 'red');
-
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
-    {%endif%}
-    {% if  form.errors %}
-        {% for field in form %}
-            {% if field.errors %}
-                {% for error in field.errors %}
-
-                    mensaje('{{ error|escape }}');
 
                 {% endfor %}
             {% endif %}
