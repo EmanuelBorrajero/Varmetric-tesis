@@ -12,10 +12,6 @@ class VariableLIst(IsStaffUserMixin, ListView):
     model = Variable
     template_name= 'Metrics/varieble_list.html'
 
-    def get_queryset(self):
-        queryset = self.model.objects.filter(user=self.request.user)
-        return queryset
-
 class VariableCreate(IsStaffUserMixin, CreateView):
     model = Variable
     form_class = VariableForm
@@ -389,10 +385,6 @@ class MeasurementCriterionDetail(IsStaffUserMixin, DetailView):
 class VariableScaleLIst(ListView):
     model = Variable
     template_name= 'Metrics/varieble_scale_list.html'
-
-    def get_queryset(self):
-        queryset = self.model.objects.filter(user=self.request.user)
-        return queryset
 
     def get_context_data(self, **kwargs):
         context = {}

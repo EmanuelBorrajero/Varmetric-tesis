@@ -7,7 +7,6 @@ class Variable(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=200, unique=True)
     description = models.TextField("Descripción")
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
 
     def __str__(self):
@@ -24,7 +23,7 @@ class Scale(models.Model):
     scale_label = models.CharField("Etiqueta", max_length=200, blank=True, null=True, unique=True)
     initial_value = models.FloatField("Valor Inicial")
     final_value = models.FloatField("Valor Final")
-    scale = models.OneToOneField(Variable, on_delete=models.CASCADE)
+    scale = models.ForeignKey(Variable, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.scale_label
@@ -39,7 +38,7 @@ class Dimension(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=200, unique=True)
     description = models.TextField("Descripción")
-    weigh = models.FloatField("Peso", default=0)
+    weigh = models.FloatField("Peso", default=1)
     variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -55,7 +54,7 @@ class Indicator(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField("Nombre", max_length=200, unique=True)
     description = models.TextField("Descripción")
-    weigh = models.FloatField("Peso", default=0)
+    weigh = models.FloatField("Peso", default=1)
     dimension = models.ForeignKey(Dimension, on_delete=models.CASCADE)
     
     def __str__(self):
