@@ -21,11 +21,7 @@ class VariableCreate(IsStaffUserMixin, CreateView):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             form = self.form_class(request.POST)
             if form.is_valid():
-                self.model.objects.create(
-                    name = form.cleaned_data.get('name'),
-                    description = form.cleaned_data.get('description'),
-                    user = self.request.user
-                )
+                form.save()
                 message = 'Variable creada corréctamente!!'
                 error = 'No hay Error'
                 responce = JsonResponse({'message': message, 'error': error})

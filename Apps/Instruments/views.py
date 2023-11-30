@@ -436,7 +436,7 @@ class ObservationCriterionsList(IsStaffUserMixin, ListView):
 
     def get_queryset(self):
         observation = Observation.objects.get(id=self.kwargs['pk'])
-        queryset = self.model.objects.order_by('criterion').filter(observation=observation)
+        queryset = self.model.objects.order_by('measurementCriterions__name').filter(observation=observation)
         return {'queryset': queryset, 'observation': observation}
 
 

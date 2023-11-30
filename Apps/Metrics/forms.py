@@ -89,6 +89,12 @@ class DimensionForm(forms.ModelForm):
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
 
+    def clean_weigh(self):
+        weigh = self.cleaned_data.get('weigh')
+        if weigh < 0:
+            raise ValidationError('El peso no puede ser un número negativo')
+        return weigh
+
 class IndicatorForm(forms.ModelForm):
     class Meta:
         model = Indicator
@@ -135,6 +141,12 @@ class IndicatorForm(forms.ModelForm):
             if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
+
+    def clean_weigh(self):
+        weigh = self.cleaned_data.get('weigh')
+        if weigh < 0:
+            raise ValidationError('El peso no puede ser un número negativo')
+        return weigh
 
 class MeasurementCriterionForm(forms.ModelForm):
     class Meta:
@@ -183,6 +195,18 @@ class MeasurementCriterionForm(forms.ModelForm):
             if char in'`!@#$%^&*()_=+}{][><\|~':
                 raise ValidationError('Caracteres incorrectos en la Descripción')
         return description
+
+    def clean_min_value(self):
+            min_value = self.cleaned_data.get('min_value')
+            if min_value < 0:
+                raise ValidationError('El valor minimo no puede ser un número negativo')
+            return min_value
+
+    def clean_max_value(self):
+        max_value = self.cleaned_data.get('max_value')
+        if max_value < 0:
+            raise ValidationError('El valor máximo no puede ser un número negativo')
+        return max_value
     
 
 class ScaleForm(forms.ModelForm):

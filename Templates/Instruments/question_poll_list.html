@@ -22,6 +22,7 @@ Varmetric | Encuesta
                             <th scope="col">&numero;</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Texto de la pregunta</th>
+                            <th scope="col">Criterio de Medida</th>
                             <th scope="col">Opciones</th> 
                         </tr>
                     </thead>
@@ -32,6 +33,7 @@ Varmetric | Encuesta
                           <td>{{forloop.counter}}</td>
                           <td>{{object.name}}</td>
                           <td>{{object.text}}</td>
+                          <td>{{object.measurementCriterions}}</td>
                           <td>
                             <button class="btn btn-outline-primary btn-block" onclick="open_modal_update_question_poll('{% url 'Instruments:question_poll_update' object.id %}')">Editar</button>
                             <a class="btn btn-outline-danger btn-block" onclick="open_modal_delete_question_poll('{% url 'Instruments:question_poll_delete' object.id %}')">Eliminar</a>

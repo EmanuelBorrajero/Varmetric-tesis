@@ -60,10 +60,8 @@ def criterion_answerpoll_value(criterion_id, user_id):
     criterion = get_object_or_404(MeasurementCriterion, id=criterion_id)
     if criterion:
         question_polls = QuestionPoll.objects.filter(measurementCriterions=criterion)
-        print(question_polls)
         if question_polls:
             question = get_object_or_404(QuestionPoll, id=question_polls[0].id)
-            print(question)
             if question:
                 answer = AnswerPoll.objects.get(questionPoll=question.id, user=user_id)
                 if answer:

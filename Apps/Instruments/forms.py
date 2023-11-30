@@ -265,6 +265,7 @@ class ReviewPollForm(forms.ModelForm):
             self.fields['value'].widget.attrs['min'] = measurement_criterion.min_value
             self.fields['value'].widget.attrs['max'] = measurement_criterion.max_value
             self.fields['value'].widget.attrs['class'] = 'form-control mt-2'
+            self.fields['value'].widget.attrs['step'] = '0.1'
 
     class Meta:
         model = AnswerPoll
@@ -289,6 +290,7 @@ class ReviewInterviewForm(forms.ModelForm):
             self.fields['value'].widget.attrs['min'] = measurement_criterion.min_value
             self.fields['value'].widget.attrs['max'] = measurement_criterion.max_value
             self.fields['value'].widget.attrs['class'] = 'form-control'
+            self.fields['value'].widget.attrs['step'] = '0.1'
 
     class Meta:
         model = AnswerInterview
